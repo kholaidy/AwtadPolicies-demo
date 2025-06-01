@@ -171,6 +171,7 @@ body {
         width: 80%;
         max-width: 300px;
         transform: translateX(100%);
+        display: block; /* إضافة هذه الخاصية */
     }
     
     #sidebar.open {
