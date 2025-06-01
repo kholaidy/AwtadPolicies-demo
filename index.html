@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة السياسات والإجراءات - شركة أوتاد الفهد</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex flex-col h-screen">
+        <!-- Header -->
+        <header class="bg-blue-900 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="img/logo_nobg.png" alt="شعار شركة أوتاد الفهد" class="h-12 ml-3">
+                    <h1 class="text-xl md:text-2xl font-bold">بوابة السياسات والإجراءات التشغيلية</h1>
+                </div>
+                <div class="flex items-center">
+                    <button id="print-btn" class="bg-blue-700 hover:bg-blue-600 text-white px-3 py-1 rounded-md ml-2">
+                        <i class="fas fa-print ml-1"></i> طباعة
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="bg-white w-64 shadow-md hidden md:block overflow-y-auto transition-all duration-300 transform">
+                <div class="p-4">
+                    <div class="relative">
+                        <input type="text" id="sidebar-search" placeholder="بحث في الأقسام..." 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md text-right pr-8">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                <nav class="mt-2">
+                    <ul class="policy-tree">
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="executive">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-building policy-type-icon"></i>
+                                <span>الإدارة العليا</span>
+                            </div>
+                            <ul class="policy-children hidden">
+                                <li class="policy-subitem" data-file="executive-vision">
+                                    <i class="fas fa-file-alt policy-type-icon"></i>
+                                    <span>الرؤية والرسالة</span>
+                                </li>
+                                <li class="policy-subitem" data-file="executive-strategy">
+                                    <i class="fas fa-file-alt policy-type-icon"></i>
+                                    <span>الخطة الاستراتيجية</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="cost-control">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-calculator policy-type-icon"></i>
+                                <span>مراقبة التكاليف</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="hr">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-users policy-type-icon"></i>
+                                <span>الموارد البشرية</span>
+                            </div>
+                            <ul class="policy-children hidden">
+                                <li class="policy-subitem" data-file="hr-recruitment">
+                                    <i class="fas fa-file-alt policy-type-icon"></i>
+                                    <span>التوظيف</span>
+                                </li>
+                                <li class="policy-subitem" data-file="hr-training">
+                                    <i class="fas fa-file-alt policy-type-icon"></i>
+                                    <span>التدريب والتطوير</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="procurement">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-shopping-cart policy-type-icon"></i>
+                                <span>المشتريات</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="contracts">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-file-contract policy-type-icon"></i>
+                                <span>التعاقدات</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="technical">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-drafting-compass policy-type-icon"></i>
+                                <span>المكتب الفني</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="pmo">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-tasks policy-type-icon"></i>
+                                <span>مكتب إدارة المشاريع</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="execution">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-hard-hat policy-type-icon"></i>
+                                <span>التنفيذ (المشاريع)</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="teams">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-users-cog policy-type-icon"></i>
+                                <span>فرق التنفيذ الذاتية</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="electromech">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-bolt policy-type-icon"></i>
+                                <span>قسم الكهرباء والميكانيكا</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="estimation">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-coins policy-type-icon"></i>
+                                <span>قسم التسعير</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="accounting">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-file-invoice-dollar policy-type-icon"></i>
+                                <span>قسم الحسابات</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="bd">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-chart-line policy-type-icon"></i>
+                                <span>قسم تطوير الأعمال والمبيعات</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="coordinators">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-people-arrows policy-type-icon"></i>
+                                <span>قسم منسقي المشاريع</span>
+                            </div>
+                        </li>
+                        <li class="policy-item">
+                            <div class="policy-header" data-file="it">
+                                <i class="fas fa-chevron-left policy-icon"></i>
+                                <i class="fas fa-laptop-code policy-type-icon"></i>
+                                <span>قسم تكنولوجيا المعلومات</span>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main id="content" class="flex-1 p-6 overflow-y-auto bg-gray-50">
+                <div id="content-container" class="bg-white rounded-lg shadow-md p-6 max-w-5xl mx-auto">
+                    <div class="text-center py-12">
+                        <img src="img/logo-large.png" alt="شعار شركة أوتاد الفهد" class="h-32 mx-auto mb-6">
+                        <h2 class="text-3xl font-bold text-blue-900 mb-4">مرحباً بكم في بوابة السياسات والإجراءات</h2>
+                        <p class="text-lg text-gray-600 mb-8">الرجاء اختيار قسم من القائمة الجانبية لعرض السياسات والإجراءات الخاصة به</p>
+                        <div class="flex justify-center">
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 text-right max-w-2xl">
+                                <h3 class="text-xl font-bold text-blue-800 mb-2">نبذة عن البوابة</h3>
+                                <p class="text-gray-700 mb-3">
+                                    تهدف هذه البوابة إلى توفير مرجع شامل لجميع السياسات والإجراءات التشغيلية المعتمدة في شركة أوتاد الفهد للمقاولات، مما يساعد في:
+                                </p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1 mr-4">
+                                    <li>توحيد إجراءات العمل وضمان الالتزام بالمعايير المعتمدة</li>
+                                    <li>تسهيل الوصول إلى المعلومات والإجراءات لجميع الموظفين</li>
+                                    <li>تحسين كفاءة العمليات وتقليل الأخطاء</li>
+                                    <li>دعم عمليات التدريب والتأهيل للموظفين الجدد</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

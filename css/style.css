@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary-color: #1e3a8a;
+    --secondary-color: #3b82f6;
+    --accent-color: #f59e0b;
+    --text-color: #1f2937;
+    --light-bg: #f9fafb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--text-color);
+}
+
+/* Sidebar Styles */
+.policy-tree {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.policy-item {
+    margin-bottom: 2px;
+}
+
+.policy-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.policy-header:hover {
+    background-color: #f3f4f6;
+}
+
+.policy-header.active {
+    background-color: #e5edff;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.policy-icon {
+    margin-left: 8px;
+    transition: transform 0.3s;
+    font-size: 0.75rem;
+}
+
+.policy-header.expanded .policy-icon {
+    transform: rotate(-90deg);
+}
+
+.policy-type-icon {
+    margin-left: 8px;
+    color: #6b7280;
+}
+
+.policy-children {
+    padding-right: 20px;
+}
+
+.policy-subitem {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.policy-subitem:hover {
+    background-color: #f3f4f6;
+}
+
+.policy-subitem.active {
+    background-color: #e5edff;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Content Styles */
+.policy-title {
+    color: var(--primary-color);
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.policy-section {
+    margin-bottom: 2rem;
+}
+
+.policy-section-title {
+    color: var(--primary-color);
+    border-right: 4px solid var(--accent-color);
+    padding-right: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.policy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.policy-table th, 
+.policy-table td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: right;
+}
+
+.policy-table th {
+    background-color: #f3f4f6;
+    font-weight: 500;
+}
+
+.policy-table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Print Styles */
+@media print {
+    #sidebar, 
+    #mobile-menu-btn,
+    #print-btn,
+    #sidebar-search {
+        display: none !important;
+    }
+    
+    #content {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .policy-title {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    
+    body {
+        background-color: white !important;
+    }
+    
+    #content-container {
+        box-shadow: none !important;
+        max-width: 100% !important;
+    }
+    
+    @page {
+        margin: 1.5cm;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #sidebar {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 80%;
+        max-width: 300px;
+        transform: translateX(100%);
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+    }
+}
