@@ -71,7 +71,88 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Print Button
     printBtn.addEventListener('click', function() {
-        window.print();
+        // الحصول على الملف الحالي المعروض
+        const activeItem = document.querySelector('.policy-item .active, .policy-subitem.active');
+        if (!activeItem) {
+            alert('الرجاء اختيار قسم من القائمة الجانبية أولاً');
+            return;
+        }
+        
+        const file = activeItem.getAttribute('data-file');
+        if (!file) {
+            alert('لم يتم العثور على محتوى للطباعة');
+            return;
+        }
+        
+        // إنشاء نافذة طباعة جديدة
+        const printWindow = window.open('', '_blank');
+        
+        // تحميل المحتوى مباشرة من ملف HTML
+        fetch(`policies/${file}.html`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في تحميل المحتوى');
+                }
+                return response.text();
+            })
+            .then(html => {
+                // إنشاء محتوى HTML للطباعة
+                let printContent = `
+                    <!DOCTYPE html>
+                    <html lang="ar" dir="rtl">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>طباعة - شركة أوتاد الفهد</title>
+                        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                        <link rel="stylesheet" href="css/style.css">
+                        <style>
+                            @media print {
+                                body { padding: 20px; }
+                                .print-header { margin-bottom: 20px; }
+                                @page { size: A4; margin: 1.5cm; }
+                            }
+                            body {
+                                background-color: white;
+                                font-family: 'Tajawal', sans-serif;
+                            }
+                            .print-content {
+                                max-width: 100%;
+                                margin: 0 auto;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="print-header text-center border-b pb-4 mb-6">
+                            <img src="img/logo-large.png" alt="شعار شركة أوتاد الفهد" class="h-20 mx-auto mb-2">
+                            <h1 class="text-xl font-bold text-blue-900">بوابة السياسات والإجراءات التشغيلية</h1>
+                            <h2 class="text-lg text-gray-700">${activeItem.textContent.trim()}</h2>
+                        </div>
+                        <div class="print-content">
+                            ${html}
+                        </div>
+                        <script>
+                            // طباعة تلقائية عند تحميل الصفحة
+                            window.onload = function() {
+                                setTimeout(function() {
+                                    window.print();
+                                }, 500);
+                            }
+                        </script>
+                    </body>
+                    </html>
+                `;
+                
+                // كتابة المحتوى في نافذة الطباعة
+                printWindow.document.open();
+                printWindow.document.write(printContent);
+                printWindow.document.close();
+            })
+            .catch(error => {
+                printWindow.close();
+                alert('حدث خطأ أثناء تحميل المحتوى للطباعة: ' + error.message);
+            });
     });
     
     // Sidebar Search
