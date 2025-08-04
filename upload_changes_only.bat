@@ -4,7 +4,7 @@ echo.
 echo === رفع التعديلات الجديدة فقط إلى GitHub ===
 echo.
 
-cd /d "H:\My Drive\kholaidy.com\sites\Awtad-policies"
+cd /d "H:\My Drive\kholaidy.com\sites\AwtadPolicies.kholaidy.com"
 
 IF NOT EXIST ".git" (
     git init
