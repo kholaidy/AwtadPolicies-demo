@@ -1,300 +1,461 @@
-<div class="policy-content">
-    <h1 class="policy-title text-2xl font-bold mb-6">الهيكل التنظيمي</h1>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الهيكل التنظيمي المطوّر - شركة أوتاد الفهد للمقاولات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        .policy-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .policy-title {
+            color: #1f2937;
+            border-bottom: 3px solid #6b7280;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        .policy-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .policy-section-title {
+            color: #374151;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d1d5db;
+        }
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .policy-table th,
+        .policy-table td {
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            text-align: right;
+        }
+        .policy-table th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #374151;
+        }
+        .mermaid {
+            text-align: center;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .note-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .recommendation-box {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .balance-box {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .level-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .level-0 { background-color: #4472C4; }
+        .level-1 { background-color: #70AD47; }
+        .level-15 { background-color: #FFC000; }
+        .level-2 { background-color: #7030A0; }
+        .sub-level { background-color: #D5A6BD; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="policy-content">
+        <h1 class="policy-title text-3xl font-bold mb-6">الهيكل التنظيمي المطوّر لشركة أوتاد الفهد للمقاولات</h1>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">1. البيانات التعريفية للوثيقة</h2>
-        <table class="policy-table">
-            <tr>
-                <th width="30%">رمز الوثيقة</th>
-                <td>EXE-ORG-001</td>
-            </tr>
-            <tr>
-                <th>تاريخ الإصدار</th>
-                <td>15/02/2025</td>
-            </tr>
-            <tr>
-                <th>تاريخ آخر تحديث</th>
-                <td>10/08/2025</td>
-            </tr>
-            <tr>
-                <th>الإدارة المسؤولة</th>
-                <td>الإدارة العليا</td>
-            </tr>
-            <tr>
-                <th>المسؤول عن التطبيق</th>
-                <td>الرئيس التنفيذي</td>
-            </tr>
-            <tr>
-                <th>تاريخ المراجعة القادمة</th>
-                <td>15/02/2026</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">2. الغرض من الوثيقة</h2>
-        <p class="mb-4">
-            تهدف هذه الوثيقة إلى توضيح الهيكل التنظيمي لشركة أوتاد الفهد للمقاولات، وتحديد خطوط الإبلاغ والمسؤوليات والعلاقات التنظيمية بين مختلف الإدارات والأقسام.
-        </p>
-        <ul class="list-disc list-inside mr-6 space-y-2">
-            <li>توضيح التسلسل الإداري وخطوط الإبلاغ</li>
-            <li>تحديد المسؤوليات والصلاحيات لكل منصب</li>
-            <li>تسهيل التواصل والتنسيق بين الإدارات</li>
-            <li>ضمان الوضوح في توزيع المهام والمسؤوليات</li>
-            <li>دعم عمليات اتخاذ القرار والحوكمة</li>
-        </ul>
-    </div>
-
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">3. نطاق التطبيق</h2>
-        <p class="mb-4">
-            يطبق هذا الهيكل التنظيمي على جميع موظفي ومستويات شركة أوتاد الفهد للمقاولات، ويشمل:
-        </p>
-        <ul class="list-disc list-inside mr-6 space-y-2">
-            <li>الإدارة العليا والمجلس التنفيذي</li>
-            <li>الإدارات الوسطى والتشغيلية</li>
-            <li>الأقسام الفنية والإدارية</li>
-            <li>فرق المشاريع والوحدات المتخصصة</li>
-            <li>جميع المناصب الإشرافية والتنفيذية</li>
-        </ul>
-    </div>
-
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">المخطط التنظيمي (Organogram)</h2>
-        
-        <div class="org-chart-container bg-gray-50 p-6 rounded-lg mb-6">
-            <div class="text-center mb-8">
-                <div class="org-box ceo-box">
-                    <h3 class="font-bold text-lg">الرئيس التنفيذي</h3>
-                    <p class="text-sm text-gray-600">Chief Executive Officer</p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="text-center">
-                    <div class="org-box deputy-box">
-                        <h4 class="font-semibold">نائب الرئيس التنفيذي</h4>
-                        <p class="text-sm text-gray-600">للعمليات</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box deputy-box">
-                        <h4 class="font-semibold">نائب الرئيس التنفيذي</h4>
-                        <p class="text-sm text-gray-600">للشؤون المالية</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box deputy-box">
-                        <h4 class="font-semibold">نائب الرئيس التنفيذي</h4>
-                        <p class="text-sm text-gray-600">للتطوير والاستراتيجية</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">إدارة المشاريع</h5>
-                        <p class="text-xs text-gray-500">PMO</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">الإدارة الفنية</h5>
-                        <p class="text-xs text-gray-500">Technical</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">إدارة التنفيذ</h5>
-                        <p class="text-xs text-gray-500">Execution</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">الكهروميكانيك</h5>
-                        <p class="text-xs text-gray-500">Electromech</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">الموارد البشرية</h5>
-                        <p class="text-xs text-gray-500">HR</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">الشؤون المالية</h5>
-                        <p class="text-xs text-gray-500">Finance</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">المحاسبة</h5>
-                        <p class="text-xs text-gray-500">Accounting</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">المشتريات</h5>
-                        <p class="text-xs text-gray-500">Procurement</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">تقنية المعلومات</h5>
-                        <p class="text-xs text-gray-500">IT</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">التطوير التجاري</h5>
-                        <p class="text-xs text-gray-500">Business Dev</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">التقديرات</h5>
-                        <p class="text-xs text-gray-500">Estimation</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="org-box dept-box">
-                        <h5 class="font-medium">مراقبة التكاليف</h5>
-                        <p class="text-xs text-gray-500">Cost Control</p>
-                    </div>
-                </div>
-            </div>
+        <!-- البيانات التعريفية -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">1. البيانات التعريفية للوثيقة</h2>
+            <table class="policy-table">
+                <tr>
+                    <th width="30%">رمز الوثيقة</th>
+                    <td>EXE-ORG-002</td>
+                </tr>
+                <tr>
+                    <th>تاريخ الإصدار</th>
+                    <td>15/02/2025</td>
+                </tr>
+                <tr>
+                    <th>تاريخ آخر تحديث</th>
+                    <td>15/12/2025</td>
+                </tr>
+                <tr>
+                    <th>الإدارة المسؤولة</th>
+                    <td>الإدارة العليا</td>
+                </tr>
+                <tr>
+                    <th>المسؤول عن التطبيق</th>
+                    <td>المدير العام</td>
+                </tr>
+                <tr>
+                    <th>تاريخ المراجعة القادمة</th>
+                    <td>15/02/2026</td>
+                </tr>
+            </table>
         </div>
 
-        <style>
-            .org-box {
-                background: white;
-                border: 2px solid #e5e7eb;
-                border-radius: 8px;
-                padding: 12px;
-                margin: 4px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                transition: all 0.3s ease;
-            }
-            .org-box:hover {
-                border-color: #3b82f6;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            }
-            .ceo-box {
-                background: linear-gradient(135deg, #1e40af, #3b82f6);
-                color: white;
-                border-color: #1e40af;
-            }
-            .deputy-box {
-                background: linear-gradient(135deg, #059669, #10b981);
-                color: white;
-                border-color: #059669;
-            }
-            .dept-box {
-                background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-                color: white;
-                border-color: #7c3aed;
-            }
-        </style>
-    </div>
-
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">كيفية قراءة المخطط التنظيمي</h2>
-        <div class="reading-guide bg-blue-50 p-4 rounded-lg">
-            <h3 class="font-semibold mb-3 text-blue-800">دليل القراءة:</h3>
-            <ul class="list-disc list-inside mr-6 space-y-2 text-blue-700">
-                <li><strong>المستوى الأول (أزرق):</strong> الرئيس التنفيذي - أعلى سلطة تنفيذية</li>
-                <li><strong>المستوى الثاني (أخضر):</strong> نواب الرئيس التنفيذي - الإدارة العليا</li>
-                <li><strong>المستوى الثالث (بنفسجي):</strong> مديرو الإدارات - الإدارة الوسطى</li>
-                <li><strong>خطوط الإبلاغ:</strong> تتبع التسلسل من الأعلى إلى الأسفل</li>
-                <li><strong>التنسيق الأفقي:</strong> بين الإدارات في نفس المستوى</li>
+        <!-- الغرض من الوثيقة -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">2. الغرض من الوثيقة</h2>
+            <p class="mb-4">
+                تهدف هذه الوثيقة إلى توضيح الهيكل التنظيمي المطوّر لشركة أوتاد الفهد للمقاولات، وتحديد خطوط الإبلاغ والمسؤوليات والعلاقات التنظيمية بين مختلف الإدارات والأقسام. وتشمل أهداف الوثيقة ما يلي:
+            </p>
+            <ul class="list-disc list-inside mr-6 space-y-2">
+                <li><strong>توضيح التسلسل الإداري وخطوط الإبلاغ:</strong> إبراز هيكلية السلطة من الأعلى إلى الأسفل</li>
+                <li><strong>تحديد المسؤوليات والصلاحيات لكل منصب:</strong> وصف مهام وصلاحيات كل دور وظيفي بوضوح</li>
+                <li><strong>تسهيل التواصل والتنسيق بين الإدارات:</strong> دعم قنوات الاتصال الفعّالة بين مختلف الأقسام</li>
+                <li><strong>ضمان الوضوح في توزيع المهام:</strong> توزيع واضح للمهام والمسؤوليات لتجنب التداخل أو الازدواجية</li>
+                <li><strong>دعم عمليات اتخاذ القرار والحوكمة:</strong> تعزيز الشفافية والمساءلة في عملية اتخاذ القرارات الإدارية</li>
             </ul>
         </div>
-    </div>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">المسؤوليات الرئيسية</h2>
-        
-        <div class="responsibility-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="responsibility-card bg-white border border-gray-200 rounded-lg p-4">
-                <h3 class="font-semibold text-blue-800 mb-3">الرئيس التنفيذي</h3>
-                <ul class="list-disc list-inside text-sm space-y-1">
-                    <li>القيادة الاستراتيجية العامة</li>
-                    <li>اتخاذ القرارات الاستراتيجية</li>
-                    <li>تمثيل الشركة أمام الجهات الخارجية</li>
-                    <li>الإشراف على تحقيق الأهداف</li>
-                </ul>
-            </div>
+        <!-- نطاق التطبيق -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">3. نطاق التطبيق</h2>
+            <p class="mb-4">
+                يُطبق هذا الهيكل التنظيمي على جميع الموظفين وفي كافة المستويات في شركة أوتاد الفهد للمقاولات.
+            </p>
+        </div>
+
+        <!-- المخطط التنظيمي المطوّر -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">4. المخطط التنظيمي المطوّر (Organogram)</h2>
             
-            <div class="responsibility-card bg-white border border-gray-200 rounded-lg p-4">
-                <h3 class="font-semibold text-green-800 mb-3">نواب الرئيس التنفيذي</h3>
-                <ul class="list-disc list-inside text-sm space-y-1">
-                    <li>تنفيذ الاستراتيجيات في مجالاتهم</li>
-                    <li>الإشراف على الإدارات التابعة</li>
-                    <li>التنسيق مع الإدارات الأخرى</li>
-                    <li>رفع التقارير للرئيس التنفيذي</li>
-                </ul>
+            <!-- المستوى 0: القيادة العليا -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">
+                    <span class="level-indicator level-0"></span>
+                    المستوى 0: القيادة العليا
+                </h3>
+                <div class="mr-8">
+                    <h4 class="font-semibold text-gray-800 mb-2">المدير العام (General Manager)</h4>
+                    <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                        <li>المرجعية النهائية والقرارات السيادية للشركة</li>
+                        <li>يشرف على المدير التنفيذي مباشرة</li>
+                        <li>يعتمد السياسات العامة والخطط الاستراتيجية</li>
+                    </ul>
+                    <div class="note-box mt-3">
+                        <p class="text-sm font-medium text-yellow-800">
+                            <strong>🟨 ملاحظة مهمة:</strong> لا يجب أن يتدخل المدير العام في تفاصيل التنفيذ، بل يعتمد ما يرفعه المدير التنفيذي، مع الاحتفاظ بحق التدخل في القرارات السيادية فقط.
+                        </p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="responsibility-card bg-white border border-gray-200 rounded-lg p-4">
-                <h3 class="font-semibold text-purple-800 mb-3">مديرو الإدارات</h3>
-                <ul class="list-disc list-inside text-sm space-y-1">
-                    <li>إدارة العمليات اليومية</li>
-                    <li>تنفيذ السياسات والإجراءات</li>
-                    <li>إدارة الفرق والموارد</li>
-                    <li>تحقيق أهداف الإدارة</li>
-                </ul>
+
+            <!-- المستوى 1: الإدارة التنفيذية -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">
+                    <span class="level-indicator level-1"></span>
+                    المستوى 1: الإدارة التنفيذية
+                </h3>
+                <div class="mr-8 space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">المدير التنفيذي (CEO / Executive Director)</h4>
+                        <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                            <li>المسؤول الأول عن إدارة جميع عمليات الشركة اليومية</li>
+                            <li>يتمتع بصلاحية تنفيذية كاملة على الإدارات التنفيذية والدوائر المساندة</li>
+                            <li>يُرفع إليه جميع التقارير الإدارية والفنية والمالية</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">المساعد الإداري</h4>
+                        <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                            <li>يقدم الدعم التنفيذي لكل من المدير العام والمدير التنفيذي</li>
+                            <li>مسؤول عن التنسيق، الأجندات، إعداد الاجتماعات، متابعة القرارات العليا</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">المساعد القانوني</h4>
+                        <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                            <li>مسؤول عن مراجعة العقود، تقديم الاستشارات القانونية، دعم القرارات الاستراتيجية</li>
+                        </ul>
+                    </div>
+                    <div class="recommendation-box">
+                        <p class="text-sm font-medium text-green-800">
+                            <strong>✅ توصية تنظيمية مهمة:</strong> ضع حدودًا واضحة لتدخل المدير العام في العمليات التنفيذية، بحيث يتعامل مع المدير التنفيذي فقط، ويُمنع التواصل المباشر مع مديري الإدارات إلا عبر المدير التنفيذي، لتفادي التداخل والصلاحيات المزدوجة.
+                        </p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="responsibility-card bg-white border border-gray-200 rounded-lg p-4">
-                <h3 class="font-semibold text-gray-800 mb-3">رؤساء الأقسام</h3>
-                <ul class="list-disc list-inside text-sm space-y-1">
-                    <li>الإشراف على المهام التخصصية</li>
-                    <li>تطوير الإجراءات التشغيلية</li>
-                    <li>إدارة الفرق الفنية</li>
-                    <li>ضمان جودة المخرجات</li>
-                </ul>
+
+            <!-- المستوى 1.5: المستشارين التنفيذيين -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">
+                    <span class="level-indicator level-15"></span>
+                    المستوى 1.5: المستشارين التنفيذيين
+                </h3>
+                <div class="mr-8 space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">مدير الموارد البشرية (HR Director)</h4>
+                        <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                            <li>يعتبر جهة استشارية وتنفيذية</li>
+                            <li>يدير التوظيف، الرواتب، الهيكل الوظيفي، الأداء، التدريب</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-2">المدير المالي (Finance Director)</h4>
+                        <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                            <li>يشرف على جميع العمليات المالية والمحاسبية</li>
+                            <li>يقدم تقاريره مباشرة للمدير التنفيذي، مع حق الوصول المباشر للمدير العام في التقارير المالية الرسمية</li>
+                        </ul>
+                    </div>
+                    <div class="balance-box">
+                        <p class="text-sm font-medium text-blue-800">
+                            <strong>🔄 علاقة متوازنة:</strong> توثيق العلاقة بين المدير التنفيذي ومديري الموارد البشرية والمالية عبر اجتماعات أسبوعية رسمية ومهام محددة مسبقًا. صلاحياتهم يجب أن تُنظم بوضوح لتفادي تضارب أو ازدواج مسؤوليات.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المستوى 2: الإدارات التنفيذية الرئيسية -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">
+                    <span class="level-indicator level-2"></span>
+                    المستوى 2: الإدارات التنفيذية الرئيسية (تحت إشراف المدير التنفيذي)
+                </h3>
+                <div class="mr-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">1. إدارة مراقبة التكاليف (Cost Control)</h4>
+                        <p class="text-sm text-gray-600">مسؤولة عن متابعة تكاليف المشاريع، تحليل الانحرافات، اعتماد أوامر الشراء</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">2. إدارة الحسابات (Accounting)</h4>
+                        <p class="text-sm text-gray-600">تنفيذ العمليات المحاسبية، إعداد التقارير المالية، مراجعة الذمم المدينة والدائنة</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">3. إدارة المشتريات (Procurement)</h4>
+                        <p class="text-sm text-gray-600">طلبات الشراء، أوامر الشراء، العلاقات مع الموردين، المقارنات والعقود</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">4. إدارة العقود (Subcontracting)</h4>
+                        <p class="text-sm text-gray-600">التعاقد مع المقاولين من الباطن، صياغة العقود، متابعة التنفيذ والتقارير القانونية</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">5. إدارة المشاريع (Projects)</h4>
+                        <p class="text-sm text-gray-600">يدير جميع مشاريع الشركة الميدانية</p>
+                        <div class="mt-2 text-xs text-gray-500">
+                            <span class="level-indicator sub-level" style="width: 12px; height: 12px;"></span>
+                            هيكل فرعي: مدير مشروع، مهندس تنفيذ، مسؤول مشتريات، محاسب مشروع، مراقب جودة، مسؤول سلامة، مشرف عمال
+                        </div>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">6. إدارة المكتب الفني (Technical Office)</h4>
+                        <p class="text-sm text-gray-600">مراجعة المخططات، الكميات، إعداد المستخلصات، التنسيق مع الموقع</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">7. إدارة التسعير والعطاءات (Estimation & Bidding)</h4>
+                        <p class="text-sm text-gray-600">دراسة المشاريع الجديدة، تقديم عروض الأسعار، تحليل المنافسين</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">8. إدارة التطوير والمبيعات (Business Development & Sales)</h4>
+                        <p class="text-sm text-gray-600">تطوير العلاقات مع العملاء، البحث عن فرص جديدة، التسويق العقاري إن وُجد</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">9. إدارة التنسيق (Coordination Department)</h4>
+                        <p class="text-sm text-gray-600">الربط بين الإدارات والمشاريع، متابعة الاجتماعات، الجداول الزمنية</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">10. إدارة PMO (Project Management Office)</h4>
+                        <p class="text-sm text-gray-600">بناء النظام الإداري للمشاريع، مراجعة الأداء، مؤشرات الإنجاز، الأدوات الرقابية</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">11. إدارة التحصيل وخدمة ما بعد البيع (Collections & Post-Sales)</h4>
+                        <p class="text-sm text-gray-600">متابعة دفعات العملاء، مراجعة العقود بعد التنفيذ، استبيانات الرضا</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">12. إدارة الفرق الذاتية (In-house Teams)</h4>
+                        <p class="text-sm text-gray-600">تشغيل فرق العمل المباشرة في الشركة (نجارين، حدادين، كهربائيين...) وتوجيههم للمشاريع حسب الخطة</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">13. إدارة الإلكتروميكانيك (Electromechanical Dept.)</h4>
+                        <p class="text-sm text-gray-600">تنفيذ أعمال الكهرباء والميكانيكا والتكييف في جميع المشاريع</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border">
+                        <h4 class="font-semibold text-gray-800 mb-2">14. إدارة تكنولوجيا المعلومات (IT Department)</h4>
+                        <p class="text-sm text-gray-600">البنية التحتية الرقمية، الشبكات، أنظمة التشغيل والـERP</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">آليات التحديث والمراجعة</h2>
-        <div class="update-process bg-yellow-50 p-4 rounded-lg">
-            <h3 class="font-semibold mb-3 text-yellow-800">عملية التحديث:</h3>
-            <ol class="list-decimal list-inside mr-6 space-y-2 text-yellow-700">
-                <li><strong>المراجعة السنوية:</strong> تراجع إدارة الموارد البشرية والتطوير التنظيمي هذا المخطط سنوياً</li>
-                <li><strong>التحديثات الطارئة:</strong> عند حدوث تغييرات تنظيمية مهمة</li>
-                <li><strong>الاعتماد:</strong> جميع التحديثات تحتاج موافقة الرئيس التنفيذي</li>
-                <li><strong>التوزيع:</strong> إبلاغ جميع الموظفين بالتحديثات خلال 48 ساعة</li>
-                <li><strong>التوثيق:</strong> حفظ نسخ من جميع الإصدارات السابقة</li>
-            </ol>
+        <!-- مخطط Mermaid -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">5. مخطط Mermaid للهيكل التنظيمي</h2>
+            <div class="mermaid" id="orgChart">
+flowchart RL
+    GM["🔵 المدير العام<br/>General Manager"] --> CEO["🔵 المدير التنفيذي<br/>CEO/Executive Director"]
+    
+    %% المساعدين - يتبعون المدير التنفيذي مباشرة ويقدمون الدعم للمدير العام
+    CEO --> AA["📋 المساعد الإداري<br/>Administrative Assistant"]
+    GM -.-> AA
+    CEO --> LA["⚖️ المساعد القانوني<br/>Legal Assistant"]
+    GM -.-> LA
+    
+    %% المستشارين التنفيذيين
+    CEO --> HRD["👥 مدير الموارد البشرية<br/>HR Director"]
+    CEO --> FD["💰 المدير المالي<br/>Finance Director"]
+    
+    %% الإدارات التنفيذية الرئيسية
+    CEO --> CC["📊 إدارة مراقبة التكاليف<br/>Cost Control"]
+    FD --> ACC["📈 إدارة الحسابات<br/>Accounting"]
+    CEO --> PROC["🛒 إدارة المشتريات<br/>Procurement"]
+    CEO --> SUB["📝 إدارة العقود<br/>Subcontracting"]
+    CEO --> PROJ["🏗️ إدارة المشاريع<br/>Projects"]
+    CEO --> TECH["🔧 إدارة المكتب الفني<br/>Technical Office"]
+    CEO --> EST["💡 إدارة التسعير والعطاءات<br/>Estimation & Bidding"]
+    CEO --> BD["📈 إدارة التطوير والمبيعات<br/>Business Development"]
+    CEO --> COORD["🔄 إدارة التنسيق<br/>Coordination"]
+    CEO --> PMO["📋 إدارة PMO<br/>Project Management Office"]
+    FD --> COLL["💳 إدارة التحصيل<br/>Collections & Post-Sales"]
+    CEO --> TEAMS["👷 إدارة الفرق الذاتية<br/>In-house Teams"]
+    CEO --> ELEC["⚡ إدارة الإلكتروميكانيك<br/>Electromechanical"]
+    CEO --> IT["💻 إدارة تكنولوجيا المعلومات<br/>IT Department"]
+    
+    %% الهيكل الفرعي للمشاريع
+    PROJ --> PM["مدير مشروع<br/>Project Manager"]
+    PROJ --> EE["مهندس تنفيذ<br/>Execution Engineer"]
+    PROJ --> PO["مسؤول مشتريات<br/>Procurement Officer"]
+    PROJ --> PA["محاسب مشروع<br/>Project Accountant"]
+    PROJ --> QC["مراقب جودة<br/>Quality Controller"]
+    PROJ --> SO["مسؤول سلامة<br/>Safety Officer"]
+    PROJ --> WS["مشرف عمال<br/>Workers Supervisor"]
+    
+    %% تنسيق الألوان
+    classDef level0 fill:#4472C4,stroke:#333,stroke-width:3px,color:#fff
+    classDef level1 fill:#70AD47,stroke:#333,stroke-width:2px,color:#fff
+    classDef level15 fill:#FFC000,stroke:#333,stroke-width:2px,color:#000
+    classDef level2 fill:#7030A0,stroke:#333,stroke-width:2px,color:#fff
+    classDef subLevel fill:#D5A6BD,stroke:#333,stroke-width:1px,color:#000
+    
+    class GM level0
+    class CEO,AA,LA level1
+    class HRD,FD level15
+    class CC,ACC,PROC,SUB,PROJ,TECH,EST,BD,COORD,PMO,COLL,TEAMS,ELEC,IT level2
+    class PM,EE,PO,PA,QC,SO,WS subLevel
+            </div>
         </div>
-    </div>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">خطوط الإبلاغ والتواصل</h2>
-        <div class="communication-matrix">
+        <!-- كيفية قراءة المخطط -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">6. كيفية قراءة المخطط التنظيمي</h2>
+            <p class="mb-4">لفهم المخطط التنظيمي بشكل صحيح، يُرجى مراعاة دليل القراءة التالي:</p>
+            <ul class="list-disc list-inside mr-6 space-y-2">
+                <li><span class="level-indicator level-0"></span><strong>المستوى 0 (باللون الأزرق):</strong> يمثل المدير العام ويعتبر أعلى سلطة في الشركة</li>
+                <li><span class="level-indicator level-1"></span><strong>المستوى 1 (باللون الأخضر):</strong> يمثل المدير التنفيذي والمساعدين المباشرين</li>
+                <li><span class="level-indicator level-15"></span><strong>المستوى 1.5 (باللون الأصفر):</strong> يمثل المستشارين التنفيذيين (الموارد البشرية والمالية)</li>
+                <li><span class="level-indicator level-2"></span><strong>المستوى 2 (باللون البنفسجي):</strong> يمثل مديري الإدارات التنفيذية الرئيسية</li>
+                <li><span class="level-indicator sub-level"></span><strong>المستوى الفرعي (باللون الوردي):</strong> يمثل الهيكل الفرعي للمشاريع</li>
+            </ul>
+        </div>
+
+        <!-- المسؤوليات الرئيسية -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">7. المسؤوليات الرئيسية لكل مستوى إداري</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold text-gray-800 mb-3">المدير العام</h3>
+                    <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                        <li>وضع الرؤية الاستراتيجية العامة للشركة</li>
+                        <li>اتخاذ القرارات السيادية والاستراتيجية المصيرية</li>
+                        <li>الإشراف على المدير التنفيذي وتقييم أدائه</li>
+                        <li>تمثيل الشركة أمام الجهات الخارجية الرئيسية</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold text-gray-800 mb-3">المدير التنفيذي</h3>
+                    <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                        <li>إدارة العمليات اليومية للشركة</li>
+                        <li>تنفيذ الاستراتيجيات المعتمدة من المدير العام</li>
+                        <li>الإشراف على جميع الإدارات التنفيذية</li>
+                        <li>رفع التقارير الدورية للمدير العام</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold text-gray-800 mb-3">المستشارين التنفيذيين</h3>
+                    <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                        <li>تقديم الاستشارة المتخصصة في مجالاتهم</li>
+                        <li>دعم اتخاذ القرارات الاستراتيجية</li>
+                        <li>ضمان الامتثال للمعايير والقوانين</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded border">
+                    <h3 class="font-semibold text-gray-800 mb-3">مديري الإدارات</h3>
+                    <ul class="list-disc list-inside mr-6 space-y-1 text-sm">
+                        <li>إدارة العمليات التخصصية في إداراتهم</li>
+                        <li>تحقيق الأهداف المحددة لكل إدارة</li>
+                        <li>التنسيق مع الإدارات الأخرى</li>
+                        <li>رفع التقارير للمدير التنفيذي</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- آليات التحديث والمراجعة -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">8. آليات التحديث والمراجعة</h2>
+            <p class="mb-4">لضمان أن الهيكل التنظيمي يبقى محدّثًا وملائمًا للتطورات:</p>
+            <ul class="list-disc list-inside mr-6 space-y-2">
+                <li><strong>المراجعة السنوية:</strong> مراجعة شاملة للهيكل التنظيمي سنوياً</li>
+                <li><strong>التحديثات الطارئة:</strong> إمكانية التحديث عند الحاجة الماسة</li>
+                <li><strong>الاعتماد والموافقة:</strong> جميع التحديثات تحتاج موافقة المدير العام</li>
+                <li><strong>التوزيع والإبلاغ:</strong> إبلاغ جميع الموظفين بالتغييرات خلال 48 ساعة</li>
+                <li><strong>التوثيق والأرشفة:</strong> الاحتفاظ بنسخ من جميع الإصدارات السابقة</li>
+            </ul>
+        </div>
+
+        <!-- خطوط الإبلاغ والتواصل -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">9. خطوط الإبلاغ والتواصل</h2>
             <h3 class="font-semibold mb-3">مبادئ التواصل:</h3>
             <ul class="list-disc list-inside mr-6 space-y-2">
-                <li><strong>التواصل الرسمي:</strong> يتبع التسلسل الهرمي المحدد في المخطط</li>
-                <li><strong>التواصل الطارئ:</strong> يمكن التواصل المباشر في الحالات العاجلة</li>
-                <li><strong>التنسيق الأفقي:</strong> مسموح بين الإدارات في نفس المستوى</li>
-                <li><strong>التقارير الدورية:</strong> تتبع خطوط الإبلاغ المحددة</li>
-                <li><strong>الاجتماعات:</strong> تنظم حسب المستويات التنظيمية</li>
+                <li><strong>التواصل الرسمي:</strong> وفق التسلسل الهرمي المحدد</li>
+                <li><strong>الحالات الطارئة:</strong> إمكانية التواصل المباشر مع إخطار المسؤول المباشر</li>
+                <li><strong>التنسيق الأفقي:</strong> مشجّع بين الإدارات في نفس المستوى</li>
+                <li><strong>التقارير الدورية:</strong> وفق خطوط الإبلاغ المحددة</li>
+                <li><strong>الاجتماعات:</strong> منتظمة حسب المستويات التنظيمية</li>
             </ul>
         </div>
-    </div>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">الإحالات والمراجع</h2>
-        <div class="references-note bg-gray-50 p-4 rounded-lg">
-            <p class="mb-3 font-medium text-gray-800">
-                <strong>ملاحظة مهمة:</strong> يُرجى الرجوع إلى هذه الوثيقة عند مراجعة أي من السياسات التالية:
-            </p>
-            <ul class="list-disc list-inside mr-6 space-y-1 text-gray-700">
-                <li>سياسات الموارد البشرية (التوظيف، التدريب، إدارة الأداء)</li>
+        <!-- الإحالات والمراجع -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">10. الإحالات والمراجع</h2>
+            <p class="mb-3">يُرجى الرجوع إلى هذه الوثيقة عند مراجعة أو تحديث:</p>
+            <ul class="list-disc list-inside mr-6 space-y-1">
+                <li>سياسات الموارد البشرية</li>
                 <li>سياسات الشؤون المالية والمحاسبة</li>
                 <li>سياسات إدارة المشاريع والعمليات</li>
                 <li>سياسات المشتريات والعقود</li>
@@ -302,21 +463,89 @@
                 <li>جميع السياسات الإدارية والتشغيلية الأخرى</li>
             </ul>
         </div>
+
+        <!-- المخالفات والعقوبات والمكافآت -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">المخالفات المحتملة:</h2>
+            <ul class="list-disc list-inside mr-6 space-y-2 text-gray-800">
+                <li>عدم الالتزام بخطوط الإبلاغ المحددة في الهيكل التنظيمي</li>
+                <li>تجاوز الصلاحيات المحددة لكل منصب</li>
+                <li>عدم التنسيق مع الإدارات ذات العلاقة</li>
+                <li>إهمال المسؤوليات المحددة للمنصب</li>
+                <li>التدخل في صلاحيات الإدارات الأخرى دون تنسيق</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">العقوبات المقترحة:</h2>
+            <ul class="list-disc list-inside mr-6 space-y-2 text-gray-800">
+                <li>إنذار شفهي للمخالفات البسيطة</li>
+                <li>إنذار كتابي للمخالفات المتكررة</li>
+                <li>خصم من الراتب للمخالفات المؤثرة على سير العمل</li>
+                <li>إيقاف عن العمل للمخالفات الجسيمة</li>
+                <li>إنهاء الخدمة في حالات التجاوز الخطير للصلاحيات</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">المكافآت:</h2>
+            <ul class="list-disc list-inside mr-6 space-y-2 text-gray-800">
+                <li>شهادة تقدير للالتزام المتميز بالهيكل التنظيمي</li>
+                <li>مكافأة مالية للتميز في التنسيق بين الإدارات</li>
+                <li>ترقية أو زيادة في الراتب للأداء الاستثنائي</li>
+                <li>تكليف بمسؤوليات إضافية كتقدير للكفاءة</li>
+                <li>إشادة في التقرير السنوي للشركة</li>
+            </ul>
+        </div>
+
+        <!-- تاريخ الاعتماد والتحديث -->
+        <div class="policy-section">
+            <h2 class="policy-section-title text-xl font-semibold">11. تاريخ الاعتماد والتحديث</h2>
+            <ul class="space-y-2">
+                <li><strong>تاريخ الاعتماد الأولي:</strong> 15/02/2025</li>
+                <li><strong>آخر تحديث:</strong> 15/12/2025 (الإصدار 2.0)</li>
+                <li><strong>موعد المراجعة القادمة:</strong> 15/02/2026</li>
+            </ul>
+            <p class="text-sm text-gray-600 mt-4">
+                يتم مراجعة هذا الهيكل التنظيمي سنويًا أو عند الحاجة، وذلك لضمان مواكبته للمتغيرات والتطورات الجديدة ومتطلبات العمل.
+            </p>
+        </div>
     </div>
 
-    <div class="policy-section">
-        <h2 class="policy-section-title text-xl font-semibold">تاريخ الاعتماد والتحديث</h2>
-        <p class="mb-2">
-            <strong>تاريخ الاعتماد الأولي:</strong> 15/02/2025م
-        </p>
-        <p class="mb-2">
-            <strong>آخر تحديث:</strong> 10/08/2025م (الإصدار 1.1)
-        </p>
-        <p class="mb-2">
-            <strong>المراجعة القادمة:</strong> 15/02/2026م
-        </p>
-        <p class="text-sm text-gray-600">
-            يتم مراجعة هذا الهيكل التنظيمي سنوياً أو عند الحاجة لضمان مواكبته للتطورات والمتطلبات الجديدة.
-        </p>
-    </div>
-</div>
+    <script>
+        // تهيئة Mermaid
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحقق من وجود Mermaid
+            if (typeof mermaid !== 'undefined') {
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'default',
+                    flowchart: {
+                        useMaxWidth: true,
+                        htmlLabels: true,
+                        curve: 'basis'
+                    },
+                    themeVariables: {
+                        fontFamily: 'Arial, sans-serif',
+                        fontSize: '14px'
+                    }
+                });
+                
+                // رسم المخطط
+                const chartElement = document.getElementById('orgChart');
+                if (chartElement) {
+                    const chartCode = chartElement.textContent.trim();
+                    if (chartCode) {
+                        chartElement.innerHTML = '';
+                        mermaid.render('orgChart-svg', chartCode, function(svgCode) {
+                            chartElement.innerHTML = svgCode;
+                        });
+                    }
+                }
+            } else {
+                console.error('Mermaid library not loaded');
+            }
+        });
+    </script>
+</body>
+</html>

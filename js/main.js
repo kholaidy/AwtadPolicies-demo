@@ -31,42 +31,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Toggle Policy Children
-    policyHeaders.forEach(header => {
-        header.addEventListener('click', function(e) {
-            const parent = this.parentElement;
+    // Handle clicks on sidebar items using event delegation
+    sidebar.addEventListener('click', function(e) {
+        const target = e.target.closest('.policy-header, .policy-subitem');
+
+        if (!target) return; // Exit if the click was not on a target item
+
+        // --- Handle expanding/collapsing for headers ---
+        if (target.classList.contains('policy-header')) {
+            const parent = target.parentElement;
             const children = parent.querySelector('.policy-children');
-            
             if (children) {
-                e.stopPropagation();
-                this.classList.toggle('expanded');
+                target.classList.toggle('expanded');
                 children.classList.toggle('hidden');
             }
+        }
+
+        // --- Handle content loading for any item with a data-file attribute ---
+        const file = target.getAttribute('data-file');
+        if (file) {
+            loadPolicyContent(file);
             
-            // Load content if it has a data-file attribute
-            const file = this.getAttribute('data-file');
-            if (file) {
-                loadPolicyContent(file);
-                
-                // Set active state
-                policyItems.forEach(item => item.classList.remove('active'));
-                this.classList.add('active');
-            }
-        });
-    });
-    
-    // Handle Policy Subitem Click
-    document.querySelectorAll('.policy-subitem').forEach(item => {
-        item.addEventListener('click', function() {
-            const file = this.getAttribute('data-file');
-            if (file) {
-                loadPolicyContent(file);
-                
-                // Set active state
-                policyItems.forEach(item => item.classList.remove('active'));
-                this.classList.add('active');
-            }
-        });
+            // Set active state
+            policyItems.forEach(item => item.classList.remove('active'));
+            target.classList.add('active');
+        }
     });
     
     // Print Button
@@ -216,6 +205,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(html => {
                 contentContainer.innerHTML = html;
                 
+                // Initialize Mermaid for dynamically loaded content
+                initializeMermaid();
+                
                 // Add content search functionality
                 addContentSearch();
                 
@@ -311,5 +303,27 @@ document.addEventListener('DOMContentLoaded', function() {
             return count;
         }
         return 0;
+    }
+    
+    // Initialize Mermaid once on page load
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+    }
+
+    // Function to render Mermaid diagrams in dynamically loaded content
+    function initializeMermaid() {
+        if (typeof mermaid !== 'undefined') {
+            // Use mermaid.run() to render any new diagrams
+            mermaid.run({
+                nodes: contentContainer.querySelectorAll('.mermaid')
+            });
+        }
     }
 });
