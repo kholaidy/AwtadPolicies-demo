@@ -317,69 +317,61 @@
             <h2 class="policy-section-title text-xl font-semibold">5. مخطط Mermaid للهيكل التنظيمي</h2>
             <div class="mermaid" id="orgChart">
 flowchart RL
-    GM["🔵 المدير العام<br/>General Manager"] --> CEO["🔵 المدير التنفيذي<br/>CEO/Executive Director"]
+    GM["المدير العام"] --> DGM["نائب المدير العام"]
+    GM --> CEO["المدير التنفيذي CEO"]
+    GM --> GM_OM["مدير مكتب المدير العام"]
+
+    CEO --> HR["إدارة الموارد البشرية"]
+    CEO --> Dev["إدارة التطوير"]
+    CEO --> Pricing["ادارة التسعير"]
+    CEO --> Cost["إدارة التكاليف"]
+    CEO --> IT["إدارة تقنية المعلومات"]
+    CEO --> Finance["الإدارة المالية"]
+    Finance --> Fin1["إدارة التحصيل والتأمين"]
+    Finance --> Fin2["إدارة الحسابات"]
     
-    %% المساعدين - يتبعون المدير التنفيذي مباشرة ويقدمون الدعم للمدير العام
-    CEO --> AA["📋 المساعد الإداري<br/>Administrative Assistant"]
-    GM -.-> AA
-    CEO --> LA["⚖️ المساعد القانوني<br/>Legal Assistant"]
-    GM -.-> LA
-    
-    %% المستشارين التنفيذيين
-    CEO --> HRD["👥 مدير الموارد البشرية<br/>HR Director"]
-    CEO --> FD["💰 المدير المالي<br/>Finance Director"]
-    
-    %% الإدارات التنفيذية الرئيسية
-    CEO --> CC["📊 إدارة مراقبة التكاليف<br/>Cost Control"]
-    FD --> ACC["📈 إدارة الحسابات<br/>Accounting"]
-    CEO --> PROC["🛒 إدارة المشتريات<br/>Procurement"]
-    CEO --> SUB["📝 إدارة العقود<br/>Subcontracting"]
-    CEO --> PROJ["🏗️ إدارة المشاريع<br/>Projects"]
-    CEO --> TECH["🔧 إدارة المكتب الفني<br/>Technical Office"]
-    CEO --> EST["💡 إدارة التسعير والعطاءات<br/>Estimation & Bidding"]
-    CEO --> BD["📈 إدارة التطوير والمبيعات<br/>Business Development"]
-    CEO --> COORD["🔄 إدارة التنسيق<br/>Coordination"]
-    CEO --> PMO["📋 إدارة PMO<br/>Project Management Office"]
-    FD --> COLL["💳 إدارة التحصيل<br/>Collections & Post-Sales"]
-    CEO --> TEAMS["👷 إدارة الفرق الذاتية<br/>In-house Teams"]
-    CEO --> ELEC["⚡ إدارة الإلكتروميكانيك<br/>Electromechanical"]
-    CEO --> IT["💻 إدارة تكنولوجيا المعلومات<br/>IT Department"]
-    
-    %% الهيكل الفرعي للمشاريع
-    PROJ --> PM["مدير مشروع<br/>Project Manager"]
-    PROJ --> EE["مهندس تنفيذ<br/>Execution Engineer"]
-    PROJ --> PO["مسؤول مشتريات<br/>Procurement Officer"]
-    PROJ --> PA["محاسب مشروع<br/>Project Accountant"]
-    PROJ --> QC["مراقب جودة<br/>Quality Controller"]
-    PROJ --> SO["مسؤول سلامة<br/>Safety Officer"]
-    PROJ --> WS["مشرف عمال<br/>Workers Supervisor"]
-    
-    %% تنسيق الألوان
-    classDef level0 fill:#4472C4,stroke:#333,stroke-width:3px,color:#fff
-    classDef level1 fill:#70AD47,stroke:#333,stroke-width:2px,color:#fff
-    classDef level15 fill:#FFC000,stroke:#333,stroke-width:2px,color:#000
-    classDef level2 fill:#7030A0,stroke:#333,stroke-width:2px,color:#fff
-    classDef subLevel fill:#D5A6BD,stroke:#333,stroke-width:1px,color:#000
-    
-    class GM level0
-    class CEO,AA,LA level1
-    class HRD,FD level15
-    class CC,ACC,PROC,SUB,PROJ,TECH,EST,BD,COORD,PMO,COLL,TEAMS,ELEC,IT level2
-    class PM,EE,PO,PA,QC,SO,WS subLevel
-            </div>
+    CEO --> AreaM["مدير منطقة"]
+    CEO --> ProjDir["مدير المشاريع"]
+    ProjDir --> PMs["مدراء المشاريع"]
+    ProjDir --> MEP["مدير تنفيذ MEP"]
+    MEP --> MEPElec["مهندس تنفيذ كهرباء"]
+    MEP --> MEPMech["مهندس تنفيذ ميكانيك"]
+    ProjDir --> LEO["مسئول العمالة والمعدات"]
+    LEO --> Drivers["جميع سائق المعدات"]
+    ProjDir --> PMO_Office["مكتب إدارة المشاريع"]
+    PMO_Office --> OfficeEng["مهندس مكتب"]
+
+    DGM --> ProcCont["إدارة المشتريات والعقود"]
+    ProcCont --> TO["إدارة المكتب الفني"]
+    TO --> TO_Arch["مهندس مكتب فني معماري"]
+    TO --> TO_Struct["تصميم إنشائي"]
+    TO --> TO_Civil["مهندس مكتب فني مدني"]
+    TO --> TO_Extracts["مهندس مكتب فني مستخلصات"]
+    TO --> TO_Arch_Housing["معماري سكن"]
+    TO --> TO_Arch_Edu["معماري تعليم"]
+
+    ProcCont --> ProcCivilArch["إدارة المشتريات المدني والمعماري"]
+    ProcCivilArch --> PCM_Mech["مشتريات اول ميكانيك"]
+    ProcCivilArch --> PCM_Spec["اخصائي مشتريات اول"]
+    ProcCivilArch --> PCM_Site["مشتريات المواقع"]
+    ProcCivilArch --> PCM_WH_Acc["محاسب المستودعات"]
+    PCM_WH_Acc --> PCM_WH_Keeper["أمين المستودع الرئيسي"]
+    PCM_WH_Keeper --> PCM_WH_Asst["مساعد أمين مستودع"]
+
+    ProcCont --> ProcElecMech["إدارة المشتريات الالكتروميكانيك"]
+    ProcElecMech --> PEM_Elec["مشتريات اول كهرباء"]
+    ProcElecMech --> PEM_Contracts["عقود ومستخلصات"]
+</div>
+
         </div>
 
         <!-- كيفية قراءة المخطط -->
         <div class="policy-section">
             <h2 class="policy-section-title text-xl font-semibold">6. كيفية قراءة المخطط التنظيمي</h2>
-            <p class="mb-4">لفهم المخطط التنظيمي بشكل صحيح، يُرجى مراعاة دليل القراءة التالي:</p>
-            <ul class="list-disc list-inside mr-6 space-y-2">
-                <li><span class="level-indicator level-0"></span><strong>المستوى 0 (باللون الأزرق):</strong> يمثل المدير العام ويعتبر أعلى سلطة في الشركة</li>
-                <li><span class="level-indicator level-1"></span><strong>المستوى 1 (باللون الأخضر):</strong> يمثل المدير التنفيذي والمساعدين المباشرين</li>
-                <li><span class="level-indicator level-15"></span><strong>المستوى 1.5 (باللون الأصفر):</strong> يمثل المستشارين التنفيذيين (الموارد البشرية والمالية)</li>
-                <li><span class="level-indicator level-2"></span><strong>المستوى 2 (باللون البنفسجي):</strong> يمثل مديري الإدارات التنفيذية الرئيسية</li>
-                <li><span class="level-indicator sub-level"></span><strong>المستوى الفرعي (باللون الوردي):</strong> يمثل الهيكل الفرعي للمشاريع</li>
-            </ul>
+            <p class="mb-4">
+                المخطط يوضح التسلسل الهرمي للوظائف في الشركة كما هو موضح في الصورة المقدمة. كل صندوق يمثل منصبًا أو إدارة، والأسهم توضح علاقات التبعية (من يتبع من).
+                يبدأ الهيكل من المدير العام في الأعلى ويتفرع إلى الإدارات والأقسام المختلفة.
+            </p>
         </div>
 
         <!-- المسؤوليات الرئيسية -->
