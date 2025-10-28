@@ -1,3 +1,52 @@
+// إضافة هذا الكود في بداية الملف للتأكد من عمل الأزرار
+document.addEventListener('DOMContentLoaded', function() {
+    // إعادة تهيئة مستمعي الأحداث بعد تحميل الصفحة
+    setTimeout(() => {
+        initializePolicyButtons();
+    }, 100);
+});
+
+function initializePolicyButtons() {
+    // إزالة مستمعي الأحداث القدامى إن وجدوا
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+    
+    // إضافة مستمع الأحداث الجديد
+    sidebar.removeEventListener('click', handleSidebarClick);
+    sidebar.addEventListener('click', handleSidebarClick);
+}
+
+function handleSidebarClick(e) {
+    const target = e.target.closest('.policy-header, .policy-subitem');
+    
+    if (!target) return;
+    
+    console.log('تم النقر على:', target); // للتشخيص
+    
+    // التعامل مع توسيع/طي العناصر الرئيسية
+    if (target.classList.contains('policy-header')) {
+        const parent = target.parentElement;
+        const children = parent.querySelector('.policy-children');
+        if (children) {
+            target.classList.toggle('expanded');
+            children.classList.toggle('hidden');
+        }
+    }
+    
+    // تحميل المحتوى
+    const file = target.getAttribute('data-file');
+    if (file) {
+        console.log('تحميل ملف:', file); // للتشخيص
+        loadPolicyContent(file);
+        
+        // تعيين الحالة النشطة
+        document.querySelectorAll('.policy-item, .policy-subitem, .policy-header').forEach(item => {
+            item.classList.remove('active');
+        });
+        target.classList.add('active');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const sidebar = document.getElementById('sidebar');
@@ -8,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Policy Items
     const policyHeaders = document.querySelectorAll('.policy-header');
-    // تم تعديل هذا السطر ليشمل `.policy-header` لضمان إزالة التحديد من جميع العناصر النشطة
     const policyItems = document.querySelectorAll('.policy-item, .policy-subitem, .policy-header');
     
     // Mobile Menu Toggle
@@ -37,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!target) return; // Exit if the click was not on a target item
 
+        console.log('تم النقر على:', target); // للتشخيص
+
         // --- Handle expanding/collapsing for headers ---
         if (target.classList.contains('policy-header')) {
             const parent = target.parentElement;
@@ -50,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // --- Handle content loading for any item with a data-file attribute ---
         const file = target.getAttribute('data-file');
         if (file) {
+            console.log('تحميل ملف:', file); // للتشخيص
             loadPolicyContent(file);
             
             // Set active state
