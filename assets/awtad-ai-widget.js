@@ -10,11 +10,11 @@
     // --- CONFIGURATION ---
     const SCRIPT_TAG = document.currentScript;
     const CONFIG = {
-        endpoint: SCRIPT_TAG?.dataset.endpoint || window.AWTAD_AI_ENDPOINT || 'https://awtad-policies-ai.kholaidy.workers.dev/api/policies-ai',
-        title: SCRIPT_TAG?.dataset.title || '🤖 مساعد السياسات الذكي',
-        welcomeMessage: SCRIPT_TAG?.dataset.welcome || 'ألصق نص السياسة هنا… أو اتركني أقرأ الصفحة.',
-        lang: SCRIPT_TAG?.dataset.lang || 'ar',
-        maxTextLength: 14000, // Max characters to send to API
+        endpoint: SCRIPT_TAG?.dataset?.endpoint || 'https://<your-worker>.workers.dev/api/policies-ai',
+        title: SCRIPT_TAG?.dataset?.title || '🤖 مساعد السياسات الذكي',
+        welcomeMessage: SCRIPT_TAG?.dataset?.welcome || 'ألصق نص السياسة هنا… أو اتركني أقرأ الصفحة.',
+        lang: SCRIPT_TAG?.dataset?.lang || 'ar',
+        maxTextLength: 8000, // Max characters to send to API
         maxPageReadLength: 12000, // Max characters to read from the page
         localStorageKey: 'awtad_ai_buffer',
     };
@@ -129,10 +129,8 @@
                 <div class="awtad-ai-status"></div>
             </div>
             <div class="awtad-ai-modal-footer">
-                <button class="awtad-ai-modal-btn awtad-ai-btn-action" data-action="improve">حسّن السياسة</button>
-                <button class="awtad-ai-modal-btn awtad-ai-btn-action" data-action="compliance">فحص الالتزام</button>
-                <button class="awtad-ai-modal-btn awtad-ai-btn-action" data-action="new">إنشاء سياسة جديدة</button>
-                <button class="awtad-ai-modal-btn awtad-ai-btn-secondary" data-action="copy">نسخ</button>
+                <button class="awtad-ai-modal-btn awtad-ai-btn-action" data-action="qa">اسأل السياسات</button>
+                <button class="awtad-ai-modal-btn awtad-ai-btn-action" data-action="author">كاتب السياسات</button>
             </div>
         `;
 
@@ -144,6 +142,12 @@
         const resultArea = modal.querySelector('.awtad-ai-modal-result');
         const statusArea = modal.querySelector('.awtad-ai-status');
         const actionButtons = modal.querySelectorAll('.awtad-ai-btn-action');
+
+        // store refs for callApi
+        modalRef = modal;
+        textareaRef = textarea;
+        resultAreaRef = resultArea;
+        statusAreaRef = statusArea;
 
         // Load from localStorage
         textarea.value = localStorage.getItem(CONFIG.localStorageKey) || '';
@@ -162,15 +166,8 @@
                 case 'close':
                     modalOverlay.style.display = 'none';
                     break;
-                case 'copy':
-                    navigator.clipboard.writeText(resultArea.innerText).then(() => {
-                        statusArea.textContent = 'تم النسخ!';
-                        setTimeout(() => statusArea.textContent = '', 2000);
-                    });
-                    break;
-                case 'improve':
-                case 'compliance':
-                case 'new':
+                case 'qa':
+                case 'author':
                     callApi(action);
                     break;
             }
@@ -184,33 +181,53 @@
     function callApi(action) {
         if (isFetching) return;
 
-        let text = textarea.value.trim();
+        // refs
+        const modal = modalRef;
+        const textarea = textareaRef;
+        const resultArea = resultAreaRef;
+        const statusArea = statusAreaRef;
+
+        const inputText = (textarea?.value || '').trim();
+        let text = inputText;
         if (!text) {
-            const mainContent = document.querySelector('main')?.innerText || document.body.innerText;
+            const mainContent = document.querySelector('main')?.innerText || document.body.innerText || '';
             text = mainContent.substring(0, CONFIG.maxPageReadLength);
         }
 
-        if (!text) {
+        if (!text && action === 'author') {
             statusArea.textContent = 'لم يتم العثور على نص للمعالجة.';
             statusArea.className = 'awtad-ai-status error';
             return;
         }
 
+        // Show QA warning when applicable
+        if (action === 'qa') {
+            statusArea.textContent = 'تنبيه: الإجابات مقيدة بما ورد في السياسات فقط، وسيُعرض "غير مذكور في سياسات الشركة" عند غياب نص صريح.';
+            statusArea.className = 'awtad-ai-status';
+        } else {
+            statusArea.textContent = '';
+        }
+
         isFetching = true;
         const actionButtons = modal.querySelectorAll('.awtad-ai-btn-action');
         actionButtons.forEach(btn => btn.disabled = true);
-        statusArea.textContent = 'جاري المعالجة...';
         statusArea.className = 'awtad-ai-status loading';
         resultArea.innerHTML = '';
+
+        const payload = {
+            action,
+            text: (text || '').substring(0, CONFIG.maxTextLength),
+            page: location.pathname,
+        };
+        if (action === 'qa') {
+            payload.urls = collectPolicyUrls();
+            payload.question = inputText; // اعتبر الإدخال سؤالًا (إن وُجد)
+        }
 
         fetch(CONFIG.endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                text: text.substring(0, CONFIG.maxTextLength),
-                page: location.pathname,
-                action: action
-            })
+            body: JSON.stringify(payload)
         })
         .then(response => {
             if (!response.ok) {
@@ -219,8 +236,18 @@
             return response.json();
         })
         .then(data => {
-            resultArea.innerHTML = data.result.replace(/\n/g, '<br>');
+            const html = (data?.result ?? data?.html ?? '').toString();
+            if (action === 'author') {
+                // اعرض الناتج كـ HTML، وضمان وجود الغلاف إن غاب
+                const ensured = /class=["']policy-content["']/.test(html) ? html : `<div class="policy-content">${html}</div>`;
+                resultArea.innerHTML = ensured;
+            } else {
+                // لأسئلة السياسات، اعرض كنص بسيط
+                const textOut = (data?.result ?? data?.text ?? '').toString().replace(/\n/g, '<br>');
+                resultArea.innerHTML = textOut;
+            }
             statusArea.textContent = '';
+            statusArea.className = 'awtad-ai-status';
         })
         .catch(error => {
             console.error('Awtad AI Widget Error:', error);
@@ -232,6 +259,7 @@
             actionButtons.forEach(btn => btn.disabled = false);
             if (statusArea.classList.contains('loading')) {
                 statusArea.textContent = '';
+                statusArea.className = 'awtad-ai-status';
             }
         });
     }
@@ -354,3 +382,19 @@
     }
 
 })();
+    // --- Helper: Collect policy URLs from sidebar anchors ---
+    function collectPolicyUrls() {
+        const base = location.origin.replace(/\/$/, '');
+        const anchors = Array.from(document.querySelectorAll('[data-file]'));
+        const urls = anchors
+            .map(a => a.getAttribute('data-file'))
+            .filter(Boolean)
+            .map(f => `${base}/policies/${f}.html`);
+        return Array.from(new Set(urls));
+    }
+
+    // References to modal elements (set in createModal)
+    let modalRef = null;
+    let textareaRef = null;
+    let resultAreaRef = null;
+    let statusAreaRef = null;
