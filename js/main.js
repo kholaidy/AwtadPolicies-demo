@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const printBtn = document.getElementById('print-btn');
     const sidebarSearch = document.getElementById('sidebar-search');
     
+    // --- Helper function for scrolling and highlighting ---
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add highlight effect
+            element.classList.add('highlight');
+            
+            // Remove highlight after a short delay
+            setTimeout(() => {
+                element.classList.remove('highlight');
+            }, 2500); // Highlight for 2.5 seconds
+        } else {
+            console.warn('Scroll target not found:', id);
+        }
+    }
+
     // Policy Items
     const policyHeaders = document.querySelectorAll('.policy-header');
     const policyItems = document.querySelectorAll('.policy-item, .policy-subitem, .policy-header');
@@ -39,8 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!target) return; // Exit if the click was not on a target item
 
-        console.log('تم النقر على:', target); // للتشخيص
-
         // --- Handle expanding/collapsing for headers ---
         if (target.classList.contains('policy-header')) {
             const parent = target.parentElement;
@@ -54,12 +70,37 @@ document.addEventListener('DOMContentLoaded', function() {
         // --- Handle content loading for any item with a data-file attribute ---
         const file = target.getAttribute('data-file');
         if (file) {
-            console.log('تحميل ملف:', file); // للتشخيص
             loadPolicyContent(file);
             
             // Set active state
             policyItems.forEach(item => item.classList.remove('active'));
             target.classList.add('active');
+        }
+
+        // --- Handle smooth scrolling for items with a data-scroll-to attribute ---
+        const scrollToId = target.getAttribute('data-scroll-to');
+        if (scrollToId) {
+            e.preventDefault(); // Prevent default link behavior
+
+            const parentHeader = target.closest('.policy-item').querySelector('.policy-header[data-file]');
+            if (parentHeader) {
+                const requiredFile = parentHeader.getAttribute('data-file');
+                const isLoaded = contentContainer.querySelector('.policy-content') && document.querySelector('.policy-header.active')?.getAttribute('data-file') === requiredFile;
+
+                if (!isLoaded) {
+                    loadPolicyContent(requiredFile, () => {
+                        scrollToSection(scrollToId);
+                    });
+                    policyItems.forEach(item => item.classList.remove('active'));
+                    parentHeader.classList.add('active');
+                    target.classList.add('active');
+                } else {
+                    scrollToSection(scrollToId);
+                    policyItems.forEach(item => item.classList.remove('active'));
+                    parentHeader.classList.add('active');
+                    target.classList.add('active');
+                }
+            }
         }
     });
     
@@ -191,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Function to load policy content
-    function loadPolicyContent(file) {
+    function loadPolicyContent(file, callback) {
         // Show loading state
         contentContainer.innerHTML = `
             <div class="flex justify-center items-center h-64">
@@ -221,6 +262,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     sidebar.classList.remove('open');
                     const overlay = document.querySelector('.overlay');
                     if (overlay) overlay.remove();
+                }
+
+                // If a callback is provided, execute it
+                if (typeof callback === 'function') {
+                    // Use a small timeout to ensure the DOM is ready
+                    setTimeout(callback, 100);
                 }
             })
             .catch(error => {

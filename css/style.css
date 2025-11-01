@@ -188,3 +188,7 @@ body {
         z-index: 40;
     }
 }
+/* إخفاء الأيقونات بجوار عناصر القائمة الجانبية باستثناء أسهم التوسيع */
+#sidebar .policy-type-icon {
+  display: none !important;
+}
