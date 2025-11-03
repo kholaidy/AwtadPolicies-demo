@@ -1,4 +1,4 @@
-<div class="policy-content" dir="rtl">
+﻿<div class="policy-content" dir="rtl">
     <h1 class="policy-title text-2xl font-bold mb-6">دليل التنظيم والصلاحيات</h1>
 
     <div id="sec-metadata" class="policy-section">
@@ -44,7 +44,7 @@
             <li><strong>السرعة:</strong> سرعة اتخاذ القرار دون الإخلال بالرقابة المعيارية والمالية.</li>
             <li><strong>الوضوح:</strong> وضوح التسلسل الإداري في الاعتمادات والموافقات.</li>
             <li><strong>التكامل:</strong> تكامل أدوار كل من إدارة التكاليف (Cost) والإدارة المالية (Finance) دون تداخل.</li>
-            <li><strong>التأسيس:</strong> تأسيس مرجعية موحدة تُبنى عليها صلاحيات الوصول والاعتماد في الأنظمة الإلكترونية (ERPNext) لاحقًا.</li>
+            <li><strong>التأسيس:</strong> تأسيس مرجعية موحدة تُبنى عليها صلاحيات الوصول والاعتماد في الأنظمة الإلكترونية (ERP) لاحقًا.</li>
         </ul>
     </div>
 
@@ -113,15 +113,15 @@
             يغطي هذا الدليل سياستين محوريتين:
         </p>
         <ul class="list-disc list-inside mr-6 space-y-2">
-            <li><strong>GOV-005:</strong> الهيكل التنظيمي المعتمد.</li>
-            <li><strong>GOV-006:</strong> جدول الصلاحيات وآلية الاعتمادات.</li>
+            <li id="GOV-005"><strong>GOV-005:</strong> الهيكل التنظيمي المعتمد.</li>
+            <li id="GOV-006"><strong>GOV-006:</strong> جدول الصلاحيات وآلية الاعتمادات.</li>    
         </ul>
     </div>
 
     <div id="sec-procedures" class="policy-section">
         <h2 class="policy-section-title text-xl font-semibold">6. الإجراءات (Procedures)</h2>
 
-        <h3 id="proc-gov-005" class="text-lg font-medium text-gray-800 mb-3 mt-6">GOV-005: الهيكل التنظيمي المعتمد</h3>
+        <h3 id="GOV-005" class="text-lg font-medium text-gray-800 mb-3 mt-6">GOV-005: الهيكل التنظيمي المعتمد</h3>
         <p class="mb-4">
             الهيكل التنظيمي هو الخريطة الرسمية لتدفق السلطة والمسؤولية في الشركة. يوضح الرسم التالي الهيكل المعتمد:
         </p>
@@ -131,7 +131,7 @@
 flowchart RL
     GM["المدير العام"] --> DGM["نائب المدير<br/>العام"] & CEO["المدير التنفيذي"]
     GM -. سكرتارية/مساندة .-> GM_OM["مدير مكتب<br/>المدير العام"]
-    CEO --> ProjDir["مدير المشاريع"] & Finance["الإدارة المالية<br/>والحسابات"] & IT["إدارة تقنية<br/>المعلومات وERP"] & Cost["إدارة التكاليف"] & Pricing["إدارة التسعير"] & Dev["إدارة التطوير"] & HR["إدارة الموارد<br/>البشرية"]
+    CEO --> ProjDir["مدير المشاريع"] & Finance["الإدارة المالية<br/>والحسابات"] & IT["إدارة تقنية<br/>المعلومات وERP"] & Cost["إدارة التكاليف"] & Estimation["إدارة التسعير"] & Dev["إدارة التطوير"] & HR["إدارة الموارد<br/>البشرية"]
     Finance --> FinAccMgr["مدير الحسابات"] & FinCollections["مسئول التحصيل<br/>والضمانات والتأمينات"]
     ProjDir --> MEP["إدارة تنفيذ<br/>الكتروميكانيكال MEP"] & Proc["إدارة المشتريات"] & TO["إدارة المكتب<br/>الفني"] & PMO_Office["مكتب إدارة<br/>المشاريع"] & LEO["مسئول العمالة<br/>والمعدات بالمواقع"] & PMs["مدراء المشاريع"]
     MEP --> MEPMech["تنفيذي ميكانيك"] & MEPElec["تنفيذي كهرباء"]
@@ -151,7 +151,7 @@ flowchart RL
             <li><strong>المسؤولية:</strong> إدارة الموارد البشرية (HR) هي المسؤولة عن حفظ وتوثيق وتحديث هذا الهيكل بناءً على الاعتمادات الرسمية.</li>
         </ul>
 
-        <h3 id="proc-gov-006" class="text-lg font-medium text-gray-800 mb-3 mt-6">GOV-006: جدول الصلاحيات وآلية الاعتمادات</h3>
+        <h3 id="GOV-006" class="text-lg font-medium text-gray-800 mb-3 mt-6">GOV-006: جدول الصلاحيات وآلية الاعتمادات</h3>
         <p class="mb-4">
             جدول الصلاحيات هو "قواعد المرور" التي تحكم كيفية اتخاذ القرارات على الهيكل التنظيمي.
         </p>
@@ -162,7 +162,7 @@ flowchart RL
             <li><strong>الفصل:</strong> لا يجوز أن يجمع فرد واحد بين دور المراجع والموافق النهائي لنفس العملية.</li>
             <li><strong>التدرج:</strong> اعتماد القرارات وفق مستوى المخاطرة والأثر المالي.</li>
             <li><strong>الرقابة المزدوجة:</strong> (Cost) تراجع التكلفة المعيارية، (Finance) تراجع التدفق النقدي.</li>
-            <li><strong>التحكم الرقمي:</strong> يتم بناء هذه الصلاحيات داخل نظام ERPNext لضمان التقيّد الآلي ومنع التجاوز.</li>
+            <li><strong>التحكم الرقمي:</strong> يتم بناء هذه الصلاحيات داخل نظام ERP لضمان التقيّد الآلي ومنع التجاوز.</li>
         </ul>
 
         <h4 class="text-md font-medium text-gray-800 mb-3 mt-4">ب. آلية تحديد الصلاحيات (Mechanism):</h4>
@@ -207,7 +207,7 @@ flowchart RL
             </li>
             <li><strong>التعاقد مع المالك (Owner Contract):</strong>
                 <ul class="list-disc list-inside ml-6 space-y-1">
-                    <li>(TO) و (Pricing) يعدّون العرض.</li>
+                    <li>(TO) و (Estimation) يعدّون العرض.</li>
                     <li>(Cost) تراجع التكلفة المعيارية والربحية المستهدفة.</li>
                     <li>(Legal) تراجع الشؤون القانونية.</li>
                     <li>(Finance) تراجع جدولة الدفعات والضمانات.</li>
@@ -241,7 +241,7 @@ flowchart RL
             <li><strong>أوامر التغيير (Change Orders):</strong>
                 <ul class="list-disc list-inside ml-6 space-y-1">
                     <li>(TO) و (PM) يعدّون العرض الفني.</li>
-                    <li>(Pricing) تقوم بالتسعير.</li>
+                    <li>(Estimation) تقوم بالتسعير.</li>
                     <li>(Cost) تحلل التكلفة الإضافية مقابل المعيار الربحي.</li>
                     <li>(Finance) تراجع الأثر النقدي وجدولة القبض أو الصرف.</li>
                     <li>اعتماد (CEO) قبل الإرسال للطرف الآخر.</li>
@@ -309,7 +309,7 @@ flowchart RL
     <div id="sec-forms" class="policy-section">
         <h2 class="policy-section-title text-xl font-semibold">9. النماذج المستخدمة</h2>
         <p class="mb-4">
-            تتم جميع الإجراءات المذكورة أعلاه بشكل آلي من خلال نظام الشركة (ERPNext). النماذج الرئيسية هي:
+            تتم جميع الإجراءات المذكورة أعلاه بشكل آلي من خلال نظام الشركة (ERP). النماذج الرئيسية هي:
         </p>
         <ul class="list-disc list-inside mr-6 space-y-2">
             <li>نموذج طلب شراء (Purchase Request).</li>
@@ -400,3 +400,4 @@ flowchart RL
     </div>
 
 </div>
+

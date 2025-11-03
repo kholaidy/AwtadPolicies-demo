@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Policy Items
     const policyHeaders = document.querySelectorAll('.policy-header');
     const policyItems = document.querySelectorAll('.policy-item, .policy-subitem, .policy-header');
+
+    // إزالة الإلغاء التلقائي للإخفاء؛ نترك الحالة الافتراضية كما هي من HTML
     
     // Mobile Menu Toggle
     mobileMenuBtn.addEventListener('click', function() {
@@ -54,10 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle clicks on sidebar items using event delegation
     sidebar.addEventListener('click', function(e) {
         const target = e.target.closest('.policy-header, .policy-subitem');
+        if (!target) return;
 
-        if (!target) return; // Exit if the click was not on a target item
-
-        // --- Handle expanding/collapsing for headers ---
+        // السماح بالتوسيع/التقليص على جميع رؤوس السياسات (بما فيها الوثائق)
         if (target.classList.contains('policy-header')) {
             const parent = target.parentElement;
             const children = parent.querySelector('.policy-children');
@@ -191,42 +192,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Sidebar Search
+    // داخل document.addEventListener('DOMContentLoaded', function() { ... })
     sidebarSearch.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        
-        policyItems.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            const parent = item.closest('.policy-item');
-            
-            if (text.includes(searchTerm)) {
-                item.style.display = 'flex';
-                if (parent && searchTerm.length > 0) {
-                    const children = parent.querySelector('.policy-children');
-                    if (children) {
-                        children.classList.remove('hidden');
-                        parent.querySelector('.policy-header').classList.add('expanded');
-                    }
-                }
-            } else {
-                // Don't hide parent items
-                if (!item.classList.contains('policy-header')) {
-                    item.style.display = 'none';
-                }
-            }
-        });
-        
-        // If search is cleared, reset view
+        // ... existing code ...
         if (searchTerm === '') {
+            // إعادة إظهار العناصر فقط دون تعديل حالات التوسيع/التقليص
             policyItems.forEach(item => {
                 item.style.display = '';
-                const parent = item.closest('.policy-item');
-                if (parent) {
-                    const children = parent.querySelector('.policy-children');
-                    if (children) {
-                        children.classList.add('hidden');
-                        parent.querySelector('.policy-header').classList.remove('expanded');
-                    }
-                }
             });
         }
     });
@@ -250,6 +223,12 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 contentContainer.innerHTML = html;
+                
+                // Normalize headings: remove manual ids, inject policy codes from id patterns
+                normalizePolicyHeadings();
+
+                // Ensure anchors exist for smooth scrolling based on codes like GOV-002
+                ensureAnchors();
                 
                 // Initialize Mermaid for dynamically loaded content
                 initializeMermaid();
@@ -284,38 +263,103 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             });
     }
-    
-    // Function to add content search functionality
-    function addContentSearch() {
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = 'بحث في المحتوى...';
-        searchInput.classList.add('w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'text-right', 'mb-4');
-        
-        // Insert at the top of content
-        contentContainer.insertBefore(searchInput, contentContainer.firstChild);
-        
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            if (searchTerm.length < 2) {
-                // Reset all highlighting
-                contentContainer.innerHTML = contentContainer.innerHTML.replace(/<mark class="bg-yellow-200">(.*?)<\/mark>/g, '$1');
-                return;
+
+    // Normalize headings across loaded policy content: remove manual ids and inject the correct code into text
+    function normalizePolicyHeadings() {
+        const headings = contentContainer.querySelectorAll('.policy-section-title, h2, h3, h4');
+
+        const prefixMap = {
+            'gov': 'GOV', 'lgl': 'LGL', 'hr': 'HR', 'fin': 'FIN', 'acc': 'ACC', 'it': 'IT',
+            'pmo': 'PMO', 'proc': 'PROC', 'qaqc': 'QAQC', 'ten': 'TEN', 'am': 'AM', 'cc': 'CC', 'hse': 'HSE'
+        };
+
+        const hasCodeAtStart = (text) => /\s*^[A-Z]{2,5}-\d{3}\b/.test(text);
+
+        headings.forEach(h => {
+            const id = h.getAttribute('id');
+            if (!id) return;
+
+            const lower = id.toLowerCase();
+            let code = null;
+
+            // Try patterns like "proc-acc-002", "sec-gov-001", "hr-003"
+            const parts = lower.split(/[-_]/).filter(Boolean);
+            if (parts.length >= 2) {
+                // Case 1: <prefix>-<dept>-<num>
+                const maybeDept = parts.find(p => prefixMap[p]);
+                const maybeNum = parts.find(p => /^\d{3,}$/.test(p));
+                if (maybeDept && maybeNum) {
+                    code = `${prefixMap[maybeDept]}-${maybeNum.padStart(3, '0')}`;
+                }
             }
-            
-            // First remove any existing highlights
-            contentContainer.innerHTML = contentContainer.innerHTML.replace(/<mark class="bg-yellow-200">(.*?)<\/mark>/g, '$1');
-            
-            // Then add new highlights
-            highlightText(contentContainer, searchTerm);
-            
-            // Scroll to first match
-            const firstMark = contentContainer.querySelector('mark');
-            if (firstMark) {
-                firstMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Case 2: id already contains code-like pattern
+            if (!code) {
+                const m = lower.match(/\b([a-z]{2,5})[-_]?(\d{3,})\b/);
+                if (m && prefixMap[m[1]]) {
+                    code = `${prefixMap[m[1]]}-${m[2].padStart(3, '0')}`;
+                }
+            }
+
+            // ========= START MODIFIED SECTION =========
+            // If we derived a code, inject code into heading text if missing
+            if (code) {
+                // Only remove the ID if it's "bad" (doesn't match the code)
+                if (h.getAttribute('id') !== code) {
+                    h.removeAttribute('id');
+                }
+                const text = (h.textContent || '').trim();
+                if (!/^\s*[A-Z]{2,5}-\d{3}\b/.test(text)) {
+                    h.textContent = `${code}: ${text}`;
+                }
+            }
+            // ========= END MODIFIED SECTION =========
+        });
+    }
+    
+    // Ensure anchor IDs exist based on heading codes (e.g., GOV-002, HR-003, etc.)
+    function ensureAnchors() {
+        const headings = contentContainer.querySelectorAll('.policy-section-title, h2, h3, h4');
+        const codePattern = /\b([A-Z]{2,5}-\d{3})\b/;
+        headings.forEach(h => {
+            const text = (h.textContent || '').trim();
+            const match = text.match(codePattern);
+            if (match) {
+                const code = match[1];
+                const section = h.closest('.policy-section') || h;
+                if (!section.id) {
+                    section.id = code;
+                }
             }
         });
+    }
+    
+    // Function to add content search functionality
+    // Function to add content search functionality (MODIFIED FOR AI WIDGET)
+    function addContentSearch() {
+        // 1. إنشاء الحاوية التي يتوقعها المساعد الذكي
+        const wrapper = document.createElement('div');
+        // أضفنا تنسيقات لجعله متوافقاً مع تصميم الصفحة الرئيسية
+        wrapper.className = 'ai-search-wrapper max-w-2xl mx-auto mb-6';
+
+        // 2. إنشاء مربع الإدخال
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        // تغيير النص التوضيحي ليعكس الوظيفة الجديدة
+        searchInput.placeholder = 'اسأل المساعد الذكي عن هذه السياسة أو جميع السياسات...';
+        
+        // 3. [مهم جداً] إضافة الكلاس الذي يبحث عنه ملف الويدجت
+        searchInput.className = 'w-full px-4 py-3 border border-gray-300 rounded-md text-right text-base ai-search-input';
+        searchInput.spellcheck = false;
+
+        wrapper.appendChild(searchInput);
+        
+        // 4. إضافة المربع الجديد في أعلى المحتوى
+        contentContainer.insertBefore(wrapper, contentContainer.firstChild);
+        
+        // 5. [مهم] تم حذف كل الأكواد الخاصة بالبحث والتظليل (highlightText)
+        // سيقوم ملف awtad-ai-widget.min.js الآن بالعثور على هذا الإدخال
+        // وإضافة زر الطائرة الورقية وربطه بالمساعد تلقائياً.
     }
     
     // Function to highlight text

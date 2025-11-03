@@ -188,7 +188,127 @@ body {
         z-index: 40;
     }
 }
-/* إخفاء الأيقونات بجوار عناصر القائمة الجانبية باستثناء أسهم التوسيع */
+/* أيقونات عبر ::before للأقسام والوثائق والسياسات الفرعية */
+.policy-header:not([data-file])::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900; /* solid */
+  content: "\f07b"; /* fa-folder */
+  color: #a5b4fc; /* أزرق باهت */
+  margin-left: 8px;
+  display: inline-block;
+  width: 1.1em; /* توحيد العرض */
+  text-align: center;
+}
+
+.policy-header[data-file]::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900; /* solid */
+  content: "\f02d"; /* fa-book */
+  color: #3b82f6; /* أزرق أساسي */
+  margin-left: 8px;
+  display: inline-block;
+  width: 1.1em; /* توحيد العرض */
+  text-align: center;
+}
+
+.policy-subitem::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 400; /* regular */
+  content: "\f0f6"; /* fa-file-lines */
+  color: #6b7280; /* رمادي نصي */
+  margin-left: 8px;
+  display: inline-block;
+  width: 1.1em; /* توحيد العرض */
+  text-align: center;
+}
+
+/* منع تكرار الأيقونات: إخفاء الأيقونات المضمّنة داخل HTML */
 #sidebar .policy-type-icon {
   display: none !important;
 }
+
+/* تحسين تجربة الانتقال إلى الأقسام داخل الوثائق */
+.policy-section {
+  scroll-margin-top: 80px; /* يضمن ظهور العنوان بشكل مريح أسفل الهيدر */
+}
+
+/* إبراز مؤقت للقسم الذي تم الانتقال إليه */
+.highlight {
+  outline: 2px solid #f59e0b;
+  background-color: #fff7ed;
+  transition: background-color 2.5s ease;
+}
+
+/* أيقونة المجلد للأقسام العليا (بدون data-file) */
+#sidebar .policy-item > .policy-header:not([data-file])::before {
+  content: "\f07b"; /* fa-folder */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #64748b;
+  margin-right: 8px;
+}
+
+/* أيقونة موحّدة للمستوى الثاني (عناوين الوثائق التي تحمل data-file) */
+#sidebar .policy-item > .policy-header[data-file]::before,
+#sidebar .policy-subitem > .policy-header[data-file]::before {
+  content: "\f02d"; /* fa-book */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #64748b;
+  margin-right: 8px;
+}
+
+/* تحسين المظهر البصري للعناصر الفرعية كسياسات تابعة */
+#sidebar .policy-header[data-file] + .policy-children {
+  padding-right: 24px;
+  border-right: 2px solid #eef2ff;
+  margin-right: 4px;
+}
+
+/* ==== [الإضافة الجديدة تبدأ هنا] ==== */
+
+/* إخفاء زر المساعد القديم بجوار "طباعة" */
+#awtad-ai-btn {
+  display: none !important;
+}
+
+/* حاوية مربع البحث للسماح بوضع الأيقونة داخله */
+.ai-search-wrapper {
+  position: relative;
+}
+
+/* تنسيق مربع البحث لإفساح المجال للأيقونة */
+.ai-search-input {
+  padding-left: 50px !important; /* مساحة للأيقونة على اليسار */
+}
+
+/* زر أيقونة الطائرة الورقية */
+.ai-search-btn {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: #1f2937; /* لون مطابق لزر الإرسال في النافذة */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.ai-search-btn:hover {
+  background: #374151;
+}
+
+.ai-search-btn svg {
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* ==== [الإضافة الجديدة تنتهي هنا] ==== */
