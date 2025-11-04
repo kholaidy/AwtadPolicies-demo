@@ -114,7 +114,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        const file = activeItem.getAttribute('data-file');
+        // محاولة الحصول على data-file من الرأس الأب إذا كان العنصر النشط هو subitem
+        let file;
+        if (activeItem.hasAttribute('data-file')) {
+            file = activeItem.getAttribute('data-file');
+        } else {
+            const parentHeader = activeItem.closest('.policy-item').querySelector('.policy-header[data-file]');
+            if (parentHeader) {
+                file = parentHeader.getAttribute('data-file');
+            }
+        }
+
         if (!file) {
             alert('لم يتم العثور على محتوى للطباعة');
             return;
@@ -132,6 +142,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text();
             })
             .then(html => {
+                // الحصول على عنوان الدليل الرئيسي
+                const mainTitleItem = document.querySelector(`.policy-header[data-file="${file}"]`);
+                const mainTitle = mainTitleItem ? mainTitleItem.textContent.trim() : 'وثيقة سياسات';
+
                 // إنشاء محتوى HTML للطباعة
                 let printContent = `
                     <!DOCTYPE html>
@@ -151,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                             body {
                                 background-color: white;
-                                font-family: 'Tajawal', sans-serif;
+                                font-family: 'Tahoma', sans-serif; /* استخدام خط شائع للطباعة */
                             }
                             .print-content {
                                 max-width: 100%;
@@ -163,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="print-header text-center border-b pb-4 mb-6">
                             <img src="img/logo-large.png" alt="شعار شركة أوتاد الفهد" class="h-20 mx-auto mb-2">
                             <h1 class="text-xl font-bold text-blue-900">بوابة السياسات والإجراءات التشغيلية</h1>
-                            <h2 class="text-lg text-gray-700">${activeItem.textContent.trim()}</h2>
+                            <h2 class="text-lg text-gray-700">${mainTitle}</h2>
                         </div>
                         <div class="print-content">
                             ${html}
@@ -192,16 +206,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Sidebar Search
-    // داخل document.addEventListener('DOMContentLoaded', function() { ... })
     sidebarSearch.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        // ... existing code ...
-        if (searchTerm === '') {
-            // إعادة إظهار العناصر فقط دون تعديل حالات التوسيع/التقليص
-            policyItems.forEach(item => {
+        const searchTerm = this.value.toLowerCase().trim();
+        const items = document.querySelectorAll('#policy-tree .policy-item');
+    
+        items.forEach(item => {
+            const header = item.querySelector('.policy-header');
+            const childrenList = item.querySelector('.policy-children');
+            let itemText = (header.textContent || '').toLowerCase();
+            
+            let matchesChildren = false;
+            
+            if (childrenList) {
+                const subItems = childrenList.querySelectorAll('.policy-item, .policy-subitem');
+                subItems.forEach(subItem => {
+                    const subItemText = (subItem.textContent || '').toLowerCase();
+                    if (subItemText.includes(searchTerm)) {
+                        matchesChildren = true;
+                        subItem.style.display = ''; // إظهار العنصر الفرعي المطابق
+                    } else {
+                        subItem.style.display = 'none'; // إخفاء العنصر الفرعي غير المطابق
+                    }
+                });
+            }
+    
+            // إذا كان البحث يطابق العنوان الرئيسي أو أحد العناوين الفرعية
+            if (itemText.includes(searchTerm) || matchesChildren) {
+                item.style.display = ''; // إظهار العنصر الرئيسي
+                if (searchTerm.length > 0 && childrenList) {
+                    childrenList.classList.remove('hidden'); // فتح القائمة لإظهار النتائج الفرعية
+                    header.classList.add('expanded');
+                }
+            } else {
+                item.style.display = 'none'; // إخفاء العنصر الرئيسي
+            }
+    
+            // في حالة مسح البحث، يتم إرجاع العرض ولكن لا يتم إغلاق القوائم المفتوحة
+            if (searchTerm === '') {
                 item.style.display = '';
-            });
-        }
+                // لا نغير حالة 'hidden' أو 'expanded' هنا
+            }
+        });
     });
     
     // Function to load policy content
@@ -268,9 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function normalizePolicyHeadings() {
         const headings = contentContainer.querySelectorAll('.policy-section-title, h2, h3, h4');
 
+        // تم تحديث الخريطة لتشمل الأقسام الجديدة
         const prefixMap = {
             'gov': 'GOV', 'lgl': 'LGL', 'hr': 'HR', 'fin': 'FIN', 'acc': 'ACC', 'it': 'IT',
-            'pmo': 'PMO', 'proc': 'PROC', 'qaqc': 'QAQC', 'ten': 'TEN', 'am': 'AM', 'cc': 'CC', 'hse': 'HSE'
+            'pms': 'PMs', // تم تعديل 'PMs' إلى 'pms' للمطابقة
+            'proc': 'PROC', 'qaqc': 'QAQC', 'ten': 'TEN', 'am': 'AM', 'cc': 'CC', 'hse': 'HSE',
+            'sto': 'STO' // إضافة المخازن
         };
 
         const hasCodeAtStart = (text) => /\s*^[A-Z]{2,5}-\d{3}\b/.test(text);
@@ -300,20 +348,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     code = `${prefixMap[m[1]]}-${m[2].padStart(3, '0')}`;
                 }
             }
-
-            // ========= START MODIFIED SECTION =========
-            // If we derived a code, inject code into heading text if missing
+            
             if (code) {
-                // Only remove the ID if it's "bad" (doesn't match the code)
+                // If the heading ID doesn't match the derived code, remove it
                 if (h.getAttribute('id') !== code) {
                     h.removeAttribute('id');
                 }
                 const text = (h.textContent || '').trim();
-                if (!/^\s*[A-Z]{2,5}-\d{3}\b/.test(text)) {
+                // If text doesn't already start with the code, prepend it
+                if (!hasCodeAtStart(text)) {
                     h.textContent = `${code}: ${text}`;
                 }
             }
-            // ========= END MODIFIED SECTION =========
         });
     }
     
@@ -326,15 +372,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const match = text.match(codePattern);
             if (match) {
                 const code = match[1];
-                const section = h.closest('.policy-section') || h;
-                if (!section.id) {
+                // الأفضل هو وضع الـ ID على العنوان نفسه لضمان دقة التمرير
+                if (!h.id) {
+                    h.id = code;
+                }
+                // وإذا كان العنوان داخل .policy-section، نضع الـ ID عليه أيضاً
+                const section = h.closest('.policy-section');
+                if (section && !section.id) {
                     section.id = code;
                 }
             }
         });
     }
     
-    // Function to add content search functionality
     // Function to add content search functionality (MODIFIED FOR AI WIDGET)
     function addContentSearch() {
         // 1. إنشاء الحاوية التي يتوقعها المساعد الذكي
@@ -362,44 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // وإضافة زر الطائرة الورقية وربطه بالمساعد تلقائياً.
     }
     
-    // Function to highlight text
-    function highlightText(element, searchTerm) {
-        if (element.nodeType === 3) { // Text node
-            const text = element.nodeValue;
-            const lowerText = text.toLowerCase();
-            let position = lowerText.indexOf(searchTerm);
-            
-            if (position !== -1) {
-                const spanNode = document.createElement('span');
-                const middleNode = document.createTextNode(text.substring(position, position + searchTerm.length));
-                const markNode = document.createElement('mark');
-                markNode.classList.add('bg-yellow-200');
-                markNode.appendChild(middleNode);
-                
-                const afterNode = document.createTextNode(text.substring(position + searchTerm.length));
-                spanNode.appendChild(document.createTextNode(text.substring(0, position)));
-                spanNode.appendChild(markNode);
-                spanNode.appendChild(afterNode);
-                
-                element.parentNode.replaceChild(spanNode, element);
-                return 1;
-            }
-            return 0;
-        } else if (element.nodeType === 1) { // Element node
-            // Skip search input itself and script tags
-            if (element.tagName === 'INPUT' || element.tagName === 'SCRIPT') {
-                return 0;
-            }
-            
-            let count = 0;
-            const childNodes = Array.from(element.childNodes);
-            for (let i = 0; i < childNodes.length; i++) {
-                count += highlightText(childNodes[i], searchTerm);
-            }
-            return count;
-        }
-        return 0;
-    }
+    // (تم حذف دالة highlightText لأنها لم تعد مستخدمة)
     
     // Initialize Mermaid once on page load
     if (typeof mermaid !== 'undefined') {
@@ -422,4 +435,68 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-});
+
+
+    // --- [إضافة جديدة] دالة الربط العميق (Deep Linking) ---
+    function handleDeepLink() {
+        // 1. احصل على الـ "هاش" من الرابط (مثال: #GOV-002)
+        const hash = window.location.hash.substring(1); // (النتيجة: "GOV-002")
+
+        if (!hash) {
+            // لا يوجد هاش، لا تفعل شيئاً
+            return;
+        }
+
+        // 2. ابحث في القائمة الجانبية عن العنصر الذي يشير لهذا الـ "هاش"
+        // (نحن نبحث عن data-scroll-to وليس id)
+        const targetSubItem = document.querySelector(`.policy-subitem[data-scroll-to="${hash}"]`);
+
+        if (!targetSubItem) {
+            console.warn('Deep link target not found in sidebar:', hash);
+            return;
+        }
+
+        // 3. ابحث عن الملف الأب (data-file) لهذا العنصر
+        const parentHeader = targetSubItem.closest('.policy-item').querySelector('.policy-header[data-file]');
+        
+        if (!parentHeader) {
+            console.warn('Parent file for deep link not found:', hash);
+            return;
+        }
+
+        const fileToLoad = parentHeader.getAttribute('data-file');
+        const idToScroll = targetSubItem.getAttribute('data-scroll-to');
+
+        // 4. [مهم] قم بفتح الشجرة (إظهار القوائم المخفية)
+        let current = targetSubItem.closest('.policy-children');
+        while (current) {
+            current.classList.remove('hidden'); // أظهر القائمة الفرعية
+            const parentPolicyItem = current.closest('.policy-item');
+            if (parentPolicyItem) {
+                const header = parentPolicyItem.querySelector('.policy-header');
+                if (header) {
+                    header.classList.add('expanded'); // أضف سهم التوسيع
+                }
+                current = parentPolicyItem.closest('.policy-children'); // انتقل للأعلى
+            } else {
+                current = null;
+            }
+        }
+
+        // 5. قم بتحميل المحتوى، وعند الانتهاء، قم بالتمرير
+        loadPolicyContent(fileToLoad, () => {
+            scrollToSection(idToScroll);
+        });
+
+        // 6. تفعيل (Highlight) العناصر في القائمة
+        document.querySelectorAll('.policy-header, .policy-subitem').forEach(item => item.classList.remove('active'));
+        parentHeader.classList.add('active');
+        targetSubItem.classList.add('active');
+    }
+
+    // --- [إضافة جديدة] ---
+    // قم بتشغيل دالة الربط العميق عند تحميل الصفحة
+    handleDeepLink();
+    // --- نهاية الإضافة ---
+
+}); // نهاية DOMContentLoaded
