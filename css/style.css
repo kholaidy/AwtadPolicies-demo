@@ -1,288 +1,506 @@
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+/*------------------------------------------------------------------
+[File: style.css]
+[Version: 2.1 - Cleaned & Fixed]
+[Author: Gemini AI]
+[Description: A complete rewrite for a responsive, mobile-first policy portal. (Cleaned duplicates and fixed header button display)]
+-------------------------------------------------------------------*/
 
+/*------------------------------------------------------------------
+[Table of Contents]
+1.  Variables & Global Styles
+2.  Layout (Header, Main, Sidebar, Footer)
+3.  Header & Stats (Buttons Included)
+4.  Sidebar & Tree Navigation Structure
+    4.1. Level 1: Domain
+    4.2. Level 2: Manual
+    4.3. Level 3: Policy
+5.  Main Content Area
+6.  Responsive Design (Media Queries)
+    6.1. Tablet View (min-width: 768px)
+    6.2. Desktop View (min-width: 1024px)
+7.  Utility & Helper Classes
+8.  Print Styles
+-------------------------------------------------------------------*/
+
+/*==================================================================
+1. Variables & Global Styles
+==================================================================*/
 :root {
-    --primary-color: #1e3a8a;
-    --secondary-color: #3b82f6;
-    --accent-color: #f59e0b;
-    --text-color: #1f2937;
-    --light-bg: #f9fafb;
+    --primary-color: #1e3a8a; /* أزرق داكن */
+    --primary-light: #3b82f6; /* أزرق أساسي */
+    --accent-color: #16a34a; /* أخضر */
+    --text-dark: #1e293b;
+    --text-medium: #475569;
+    --text-light: #64748b;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --border-radius: 8px;
+
+    /* Font Awesome Icons */
+    --fa-folder-icon: "\f07b";
+    --fa-book-icon: "\f02d";
+    --fa-file-icon: "\f15c";
+    --fa-chevron-icon: "◀";
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Tajawal', sans-serif;
-    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    direction: rtl;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
 }
 
-/* Sidebar Styles */
-.policy-tree {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.policy-item {
-    margin-bottom: 2px;
-}
-
-.policy-header {
+/*==================================================================
+2. Layout (Header, Main, Sidebar, Footer)
+==================================================================*/
+.page-wrapper {
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+#sidebar {
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow);
+    overflow-y: auto;
+    padding: 16px;
+    /* Mobile styles are default */
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 380px;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+#sidebar.open {
+    transform: translateX(0);
+}
+
+#content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    background-color: var(--bg-white);
+    border-top: 1px solid var(--border-color);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+#sidebar.open + .overlay {
+    display: block;
+}
+
+
+/*==================================================================
+3. Header & Stats (Buttons Included)
+==================================================================*/
+.header {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    color: var(--text-dark);
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: var(--text-medium);
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile default */
+    gap: 16px;
+}
+
+.stat-box {
+    padding: 16px;
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.stat-box .stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.stat-box .stat-title {
+    font-size: 0.875rem;
+    color: var(--text-medium);
+    margin-top: 4px;
+}
+
+/* Stat Colors */
+.stat-box.domains { background-color: #eff6ff; }
+.stat-box.domains .stat-number { color: #2563eb; }
+.stat-box.manuals { background-color: #f0fdf4; }
+.stat-box.manuals .stat-number { color: #16a34a; }
+.stat-box.policies { background-color: #f5f3ff; }
+.stat-box.policies .stat-number { color: #7c3aed; }
+
+/* --- Styles for Header Buttons (FIXED) --- */
+
+/* Header Buttons - Desktop (Icon + Text) */
+/* (NO "display: flex;" here - Tailwind handles it) */
+.header-btn {
     align-items: center;
-    padding: 10px 15px;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #15803d;
+    color: white;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 4px;
+    font-size: 0.95rem;
     transition: background-color 0.2s;
 }
 
-.policy-header:hover {
+.header-btn:hover {
+    background-color: #166534;
+}
+
+.header-btn i {
+    font-size: 1rem;
+}
+
+/* Header Buttons - Icon Only (Tablet/Mobile) */
+.header-btn-icon {
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #15803d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.header-btn-icon:hover {
+    background-color: #166534;
+}
+
+.header-btn-icon i {
+    font-size: 1.1rem;
+}
+
+/* Dropdown Menu for Mobile */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    text-align: right;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.95rem;
+}
+
+.dropdown-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-item:hover {
     background-color: #f3f4f6;
 }
 
-.policy-header.active {
-    background-color: #e5edff;
-    color: var(--primary-color);
-    font-weight: 500;
+.dropdown-item i {
+    font-size: 1rem;
+    color: var(--text-medium);
 }
 
-.policy-icon {
-    margin-left: 8px;
-    transition: transform 0.3s;
-    font-size: 0.75rem;
+/*==================================================================
+4. Sidebar & Tree Navigation Structure
+==================================================================*/
+.tree-container {
+    background-color: var(--bg-white);
 }
 
-.policy-header.expanded .policy-icon {
+.tree-container h2 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Base item styling */
+.domain-item, .manual-item {
+    margin-bottom: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.domain-header, .manual-header, .policy-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.domain-header:hover, .manual-header:hover, .policy-item:hover {
+    background-color: #f3f4f6;
+}
+
+.icon {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Expanded state for icons */
+.expanded > .domain-title > .icon,
+.expanded > .manual-title > .icon {
     transform: rotate(-90deg);
 }
 
-.policy-type-icon {
-    margin-left: 8px;
-    color: #6b7280;
+
+/* 4.1. Level 1: Domain */
+.domain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: #fafafa;
 }
 
-.policy-children {
-    padding-right: 20px;
-}
-
-.policy-subitem {
+.domain-title {
     display: flex;
     align-items: center;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    gap: 12px;
 }
 
-.policy-subitem:hover {
-    background-color: #f3f4f6;
+.domain-name strong {
+    font-size: 1.1rem;
+    color: var(--text-dark);
 }
 
-.policy-subitem.active {
-    background-color: #e5edff;
-    color: var(--primary-color);
+.domain-name span {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+}
+
+.count-badge {
+    color: var(--bg-white);
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 99px;
     font-weight: 500;
 }
 
-/* Content Styles */
+.domain-header .count-badge { background-color: var(--primary-light); }
+
+/* 4.2. Level 2: Manual */
+.manuals-container {
+    padding: 0 8px 8px 8px;
+    background-color: var(--bg-white);
+}
+
+.manual-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #f0fdf4; /* Light green */
+}
+
+.manual-header:hover {
+    background-color: #dcfce7;
+}
+.manual-header.active {
+    background-color: #dcfce7;
+    border-right: 4px solid var(--accent-color);
+}
+
+
+.manual-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 16px; /* Indent */
+}
+
+.manual-name strong {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.manual-name span {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+}
+
+.manual-header .count-badge { background-color: var(--accent-color); }
+
+/* 4.3. Level 3: Policy */
+.policies-container {
+    padding: 8px;
+    background-color: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+}
+
+.policy-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-right: 32px; /* Further indent */
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+.policy-item.active {
+    border-left: 4px solid var(--accent-color);
+    background-color: #f0fdf4;
+}
+
+.policy-item .icon {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.policy-name strong {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.policy-name span {
+    font-size: 0.75rem;
+    color: var(--text-medium);
+}
+
+/*==================================================================
+5. Main Content Area
+==================================================================*/
+#content-container {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
 .policy-title {
     color: var(--primary-color);
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    font-size: 1.7rem;
 }
 
 .policy-section {
-    margin-bottom: 2rem;
+    margin-bottom: 32px;
+    scroll-margin-top: 80px; /* Offset for sticky header if any */
 }
 
 .policy-section-title {
     color: var(--primary-color);
+    font-size: 1.3rem;
     border-right: 4px solid var(--accent-color);
-    padding-right: 0.75rem;
-    margin-bottom: 1rem;
+    padding-right: 12px;
+    margin-bottom: 16px;
 }
 
 .policy-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 }
 
-.policy-table th, 
+.policy-table th,
 .policy-table td {
-    border: 1px solid #e5e7eb;
-    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    padding: 12px;
     text-align: right;
 }
 
 .policy-table th {
-    background-color: #f3f4f6;
-    font-weight: 500;
+    background-color: #f9fafb;
+    font-weight: 600;
 }
 
 .policy-table tr:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: #f3f4f6;
 }
 
-/* Print Styles */
-@media print {
-    #sidebar, 
-    #mobile-menu-btn,
-    #print-btn,
-    #sidebar-search {
-        display: none !important;
-    }
-    
-    #content {
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    .policy-title {
-        text-align: center;
-        margin-top: 1rem;
-    }
-    
-    body {
-        background-color: white !important;
-    }
-    
-    #content-container {
-        box-shadow: none !important;
-        max-width: 100% !important;
-    }
-    
-    @page {
-        margin: 1.5cm;
-    }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    #sidebar {
-        position: fixed;
-        top: 60px;
-        right: 0;
-        bottom: 0;
-        z-index: 50;
-        width: 80%;
-        max-width: 300px;
-        transform: translateX(100%);
-        display: block; /* إضافة هذه الخاصية */
-    }
-    
-    #sidebar.open {
-        transform: translateX(0);
-    }
-    
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 40;
-    }
-}
-/* أيقونات عبر ::before للأقسام والوثائق والسياسات الفرعية */
-.policy-header:not([data-file])::before {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900; /* solid */
-  content: "\f07b"; /* fa-folder */
-  color: #a5b4fc; /* أزرق باهت */
-  margin-left: 8px;
-  display: inline-block;
-  width: 1.1em; /* توحيد العرض */
-  text-align: center;
-}
-
-.policy-header[data-file]::before {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900; /* solid */
-  content: "\f02d"; /* fa-book */
-  color: #3b82f6; /* أزرق أساسي */
-  margin-left: 8px;
-  display: inline-block;
-  width: 1.1em; /* توحيد العرض */
-  text-align: center;
-}
-
-.policy-subitem::before {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 400; /* regular */
-  content: "\f0f6"; /* fa-file-lines */
-  color: #6b7280; /* رمادي نصي */
-  margin-left: 8px;
-  display: inline-block;
-  width: 1.1em; /* توحيد العرض */
-  text-align: center;
-}
-
-/* منع تكرار الأيقونات: إخفاء الأيقونات المضمّنة داخل HTML */
-#sidebar .policy-type-icon {
-  display: none !important;
-}
-
-/* تحسين تجربة الانتقال إلى الأقسام داخل الوثائق */
-.policy-section {
-  scroll-margin-top: 80px; /* يضمن ظهور العنوان بشكل مريح أسفل الهيدر */
-}
-
-/* إبراز مؤقت للقسم الذي تم الانتقال إليه */
-.highlight {
-  outline: 2px solid #f59e0b;
-  background-color: #fff7ed;
-  transition: background-color 2.5s ease;
-}
-
-/* أيقونة المجلد للأقسام العليا (بدون data-file) */
-#sidebar .policy-item > .policy-header:not([data-file])::before {
-  content: "\f07b"; /* fa-folder */
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  color: #64748b;
-  margin-right: 8px;
-}
-
-/* أيقونة موحّدة للمستوى الثاني (عناوين الوثائق التي تحمل data-file) */
-#sidebar .policy-item > .policy-header[data-file]::before,
-#sidebar .policy-subitem > .policy-header[data-file]::before {
-  content: "\f02d"; /* fa-book */
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  color: #64748b;
-  margin-right: 8px;
-}
-
-/* تحسين المظهر البصري للعناصر الفرعية كسياسات تابعة */
-#sidebar .policy-header[data-file] + .policy-children {
-  padding-right: 24px;
-  border-right: 2px solid #eef2ff;
-  margin-right: 4px;
-}
-
-/* ==== [الإضافة الجديدة تبدأ هنا] ==== */
-
-/* إخفاء زر المساعد القديم بجوار "طباعة" */
-#awtad-ai-btn {
-  display: none !important;
-}
-
-/* حاوية مربع البحث للسماح بوضع الأيقونة داخله */
+/* AI Search Input in Content */
 .ai-search-wrapper {
   position: relative;
 }
 
-/* تنسيق مربع البحث لإفساح المجال للأيقونة */
 .ai-search-input {
-  padding-left: 50px !important; /* مساحة للأيقونة على اليسار */
+  width: 100%;
+  padding: 12px 16px;
+  padding-left: 50px !important; /* Space for button */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
 }
 
-/* زر أيقونة الطائرة الورقية */
 .ai-search-btn {
   position: absolute;
   left: 6px;
@@ -290,25 +508,148 @@ body {
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  background: #1f2937; /* لون مطابق لزر الإرسال في النافذة */
+  background: var(--text-dark);
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
 }
+.ai-search-btn:hover { background: #374151; }
+.ai-search-btn svg { fill: none; stroke: white; stroke-width: 2; }
 
-.ai-search-btn:hover {
-  background: #374151;
+
+/*==================================================================
+6. Responsive Design (Media Queries)
+==================================================================*/
+
+/* 6.1. Tablet View (min-width: 768px) */
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #sidebar {
+        position: sticky;
+        transform: translateX(0);
+        display: block !important; /* Override inline styles */
+        box-shadow: none;
+        border-left: 1px solid var(--border-color);
+    }
+
+    #mobile-menu-btn {
+        display: none;
+    }
+
+    .overlay {
+        display: none !important;
+    }
+
+    #content-container {
+        padding: 32px;
+    }
 }
 
-.ai-search-btn svg {
-  fill: none;
-  stroke: white;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+/* 6.2. Desktop View (min-width: 1024px) */
+@media (min-width: 1024px) {
+    #content {
+        padding: 32px;
+    }
+
+    .policy-title {
+        font-size: 2rem;
+    }
+
+    /* ---
+    [FIX]: This rule applies "display: flex" to .header-btn
+    ONLY on "lg" screens (1024px and up),
+    allowing Tailwind's "hidden" class to work on small screens.
+    --- */
+    .header-btn {
+        display: flex; 
+    }
 }
-/* ==== [الإضافة الجديدة تنتهي هنا] ==== */
+
+
+/*==================================================================
+7. Utility & Helper Classes
+==================================================================*/
+
+
+/* الخطوة 1: أضف هذا الكود الجديد */
+.policy-section {
+  /* اجعل الانتقال دائماً على العنصر الأساسي */
+  transition: box-shadow 1s ease-in-out; 
+}
+
+/* الخطوة 2: قم بتعديل كلاس الهايلايت */
+.highlight {
+  box-shadow: 0 0 10px 3px rgba(59, 130, 246, 0.7);
+  border-radius: 6px;
+  /* تم حذف سطر transition من هنا */
+}
+
+/*==================================================================
+8. Print Styles
+==================================================================*/
+@media print {
+    body {
+        background-color: var(--bg-white) !important;
+        font-size: 10pt;
+    }
+
+    #sidebar,
+    .header, /* Hiding the entire top header stats */
+    #mobile-menu-btn,
+    #print-btn,
+    #sidebar-search,
+    .ai-search-wrapper,
+    .header-btn, /* Hide print buttons in print view */
+    .header-btn-icon {
+        display: none !important;
+    }
+
+    .main-layout, #content {
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+    }
+
+    #content-container {
+        box-shadow: none !important;
+        border: none;
+        max-width: 100% !important;
+        padding: 0;
+    }
+
+    .policy-title {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .policy-table {
+        page-break-inside: auto;
+    }
+    
+    .policy-table tr {
+        page-break-inside: avoid;
+    }
+
+    .policy-section {
+        page-break-before: auto;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    @page {
+        margin: 1.5cm;
+    }
+}

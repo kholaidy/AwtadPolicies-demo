@@ -6,267 +6,76 @@
     <title>بوابة السياسات والإجراءات - شركة أوتاد الفهد</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="flex flex-col h-screen">
-        <header class="bg-blue-900 text-white shadow-lg">
-            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="img/logo_nobg.png" alt="شعار شركة أوتاد الفهد" class="h-12 ml-3">
-                    <h1 class="text-xl md:text-2xl font-bold">بوابة السياسات والإجراءات التشغيلية</h1>
-                </div>
-                <div class="flex items-center">
-                    <button id="print-btn" class="bg-blue-700 hover:bg-blue-600 text-white px-3 py-1 rounded-md ml-2">
-                        <i class="fas fa-print ml-1"></i> طباعة
+<header class="bg-blue-900 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center">
+            <img src="img/logo_nobg.png" alt="شعار شركة أوتاد الفهد" class="h-12 ml-3">
+            <h1 class="text-xl md:text-2xl font-bold">بوابة السياسات والإجراءات التشغيلية</h1>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button id="print-btn-desktop" class="hidden lg:flex header-btn">
+                <i class="fas fa-print"></i>
+                <span>طباعة</span>
+            </button>
+            <button id="print-all-btn-desktop" class="hidden lg:flex header-btn">
+                <i class="fas fa-copy"></i>
+                <span>طباعة الكل</span>
+            </button>
+
+            <button id="print-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة">
+                <i class="fas fa-print"></i>
+            </button>
+            <button id="print-all-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة الكل">
+                <i class="fas fa-copy"></i>
+            </button>
+            <div class="md:hidden relative">
+                <button id="dropdown-menu-btn" class="header-btn-icon" title="القائمة">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div id="header-dropdown" class="dropdown-menu hidden">
+                    <button id="print-btn-mobile" class="dropdown-item">
+                        <i class="fas fa-print"></i>
+                        <span>طباعة</span>
                     </button>
-                    <button id="mobile-menu-btn" class="md:hidden text-white">
-                        <i class="fas fa-bars text-xl"></i>
+                    <button id="print-all-btn-mobile" class="dropdown-item">
+                        <i class="fas fa-copy"></i>
+                        <span>طباعة الكل</span>
                     </button>
                 </div>
             </div>
-        </header>
+
+            <button id="mobile-menu-btn" class="md:hidden header-btn-icon" title="القائمة الجانبية">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <button id="print-btn" class="hidden"></button>
+            <button id="print-all-btn" class="hidden"></button>
+            <button id="edit-toggle-btn" class="hidden"></button>
+        </div>
+    </div>
+</header>
 
         <div class="flex flex-1 overflow-hidden">
-            <aside id="sidebar" class="bg-white w-64 shadow-md hidden md:block overflow-y-auto transition-all duration-300 transform">
-                <div class="p-4">
+<aside id="sidebar" class="bg-white w-64 shadow-md overflow-y-auto transition-all duration-300 transform">
+                    <div class="p-4">
                     <div class="relative">
                         <input type="text" id="sidebar-search" placeholder="بحث في الأقسام..." 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md text-right pr-8">
                         <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
-                
+    
                 <nav id="policy-tree" class="mt-4">
-                    <ul>
-                        <li class="policy-item">
-                            <div class="policy-header">
-                                <i class="fas fa-angle-left policy-icon"></i>
-                                <i class="fas fa-landmark policy-type-icon"></i>
-                                <span>الحوكمة والإدارة العليا (GOV / LGL)</span>
-                            </div>
-                            <ul class="policy-children hidden">
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="GOV-Manual-1">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-gavel policy-type-icon"></i>
-                                        <span>1. دليل الحوكمة وأخلاقيات العمل</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="GOV-001"><i class="fas fa-book-reader policy-type-icon"></i><span>GOV-001: مدونة السلوك وأخلاقيات المهنة</span></li>
-                                        <li class="policy-subitem" data-scroll-to="GOV-002"><i class="fas fa-handshake-slash policy-type-icon"></i><span>GOV-002: سياسة مكافحة الفساد والرشوة</span></li>
-                                        <li class="policy-subitem" data-scroll-to="GOV-003"><i class="fas fa-bullhorn policy-type-icon"></i><span>GOV-003: سياسة الإبلاغ عن المخالفات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="GOV-004"><i class="fas fa-exclamation-triangle policy-type-icon"></i><span>GOV-004: سياسة تعارض المصالح</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="GOV-Manual-2">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-sitemap policy-type-icon"></i>
-                                        <span>2. دليل التنظيم والصلاحيات</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="GOV-005"><i class="fas fa-sitemap policy-type-icon"></i><span>GOV-005: الهيكل التنظيمي المعتمد</span></li>
-                                        <li class="policy-subitem" data-scroll-to="GOV-006"><i class="fas fa-key policy-type-icon"></i><span>GOV-006: جدول الصلاحيات (Matrix of Authority)</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="LGL-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-balance-scale policy-type-icon"></i>
-                                        <span>3. دليل الشؤون القانونية والامتثال</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="LGL-001"><i class="fas fa-file-contract policy-type-icon"></i><span>LGL-001: سياسة مراجعة وإدارة العقود</span></li>
-                                        <li class="policy-subitem" data-scroll-to="LGL-002"><i class="fas fa-id-card policy-type-icon"></i><span>LGL-002: سياسة إدارة التراخيص والسجلات الحكومية</span></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                
-                        <li class="policy-item">
-                            <div class="policy-header">
-                                <i class="fas fa-angle-left policy-icon"></i>
-                                <i class="fas fa-headset policy-type-icon"></i>
-                                <span>وثائق الإدارات الداعمة (HR / IT / AM)</span>
-                            </div>
-                            <ul class="policy-children hidden">
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="HR-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-users policy-type-icon"></i>
-                                        <span>4. دليل سياسات الموارد البشرية</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="HR-001"><i class="fas fa-user-plus policy-type-icon"></i><span>HR-001: سياسة التخطيط والتوظيف والاختيار</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-002"><i class="fas fa-money-bill-wave policy-type-icon"></i><span>HR-002: سياسة الرواتب والتعويضات والمزايا</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-003"><i class="fas fa-calendar-alt policy-type-icon"></i><span>HR-003: سياسة الدوام وساعات العمل والإجازات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-004"><i class="fas fa-chart-line policy-type-icon"></i><span>HR-004: سياسة تقييم الأداء والتطوير الوظيفي</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-005"><i class="fas fa-chalkboard-teacher policy-type-icon"></i><span>HR-005: سياسة التدريب والتطوير</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-006"><i class="fas fa-gavel policy-type-icon"></i><span>HR-006: سياسة الإجراءات التأديبية والمخالفات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-007"><i class="fas fa-user-minus policy-type-icon"></i><span>HR-007: سياسة إنهاء الخدمات ومستحقات نهاية الخدمة</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HR-008"><i class="fas fa-wallet policy-type-icon"></i><span>HR-008: سياسة السلف والعهد</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="IT-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-shield-alt policy-type-icon"></i>
-                                        <span>5. دليل سياسات تقنية وأمن المعلومات</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="IT-001"><i class="fas fa-user-secret policy-type-icon"></i><span>IT-001: سياسة أمن المعلومات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="IT-002"><i class="fas fa-laptop policy-type-icon"></i><span>IT-002: سياسة الاستخدام المقبول للأصول التقنية</span></li>
-                                        <li class="policy-subitem" data-scroll-to="IT-003"><i class="fas fa-database policy-type-icon"></i><span>IT-003: سياسة النسخ الاحتياطي واستمرارية العمل</span></li>
-                                        <li class="policy-subitem" data-scroll-to="IT-004"><i class="fas fa-lock policy-type-icon"></i><span>IT-004: سياسة خصوصية البيانات (PDPL)</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="AM-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-truck-ramp-box policy-type-icon"></i>
-                                        <span>6. دليل إدارة الأصول والمعدات</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="AM-001"><i class="fas fa-tools policy-type-icon"></i><span>AM-001: سياسة صيانة المعدات (الوقائية والعلاجية)</span></li>
-                                        <li class="policy-subitem" data-scroll-to="AM-002"><i class="fas fa-barcode policy-type-icon"></i><span>AM-002: سياسة تتبع وتسجيل الأصول</span></li>
-                                        <li class="policy-subitem" data-scroll-to="AM-003"><i class="fas fa-car policy-type-icon"></i><span>AM-003: سياسة استخدام وإدارة سيارات الشركة</span></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="policy-item">
-                            <div class="policy-header">
-                                <i class="fas fa-angle-left policy-icon"></i>
-                                <i class="fas fa-briefcase policy-type-icon"></i>
-                                <span>الشؤون المالية والرقابية (FIN / ACC / ..)</span>
-                            </div>
-                            <ul class="policy-children hidden">
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="FIN-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-hand-holding-dollar policy-type-icon"></i>
-                                        <span>7. دليل السياسات المالية</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="FIN-001"><i class="fas fa-chart-pie policy-type-icon"></i><span>FIN-001: سياسة التخطيط المالي والميزانيات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="FIN-002"><i class="fas fa-file-invoice policy-type-icon"></i><span>FIN-002: سياسة الفوترة والتحصيل (إدارة المستخلصات)</span></li>
-                                        <li class="policy-subitem" data-scroll-to="FIN-003"><i class="fas fa-cash-register policy-type-icon"></i><span>FIN-003: سياسة المصروفات النثرية والعُهد</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="ACC-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-calculator policy-type-icon"></i>
-                                        <span>8. دليل سياسات الحسابات</span>
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="ACC-001"><i class="fas fa-chart-line policy-type-icon"></i><span>ACC-001: سياسة الاعتراف بالإيراد</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-002"><i class="fas fa-exchange-alt policy-type-icon"></i><span>ACC-002: سياسة الاعتراف بالمصروفات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-003"><i class="fas fa-building policy-type-icon"></i><span>ACC-003: سياسة الأصول الثابتة</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-004"><i class="fas fa-boxes policy-type-icon"></i><span>ACC-004: سياسة المخزون</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-005"><i class="fas fa-file-alt policy-type-icon"></i><span>ACC-005: سياسة المخصصات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-006"><i class="fas fa-balance-scale policy-type-icon"></i><span>ACC-006: سياسة التسويات</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-007"><i class="fas fa-book-medical policy-type-icon"></i><span>ACC-007: سياسة الإقفال المحاسبي وإعداد القوائم</span></li>
-                                        <li class="policy-subitem" data-scroll-to="ACC-008"><i class="fas fa-landmark policy-type-icon"></i><span>ACC-008: سياسة الامتثال للزكاة والضريبة</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="TEN-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-file-signature policy-type-icon"></i>
-                                        <span>9. دليل المناقصات والتسعير</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="TEN-001"><i class="fas fa-calculator policy-type-icon"></i><span>TEN-001: سياسة دراسة العطاءات والتسعير</span></li>
-                                        <li class="policy-subitem" data-scroll-to="TEN-002"><i class="fas fa-paper-plane policy-type-icon"></i><span>TEN-002: سياسة اعتماد وتقديم عروض الأسعار</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="PROC-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-shopping-cart policy-type-icon"></i>
-                                        <span>10. دليل المشتريات والعقود</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="PROC-001"><i class="fas fa-receipt policy-type-icon"></i><span>PROC-001: سياسة المشتريات (من طلب الشراء حتى أمر الشراء)</span></li>
-                                        <li class="policy-subitem" data-scroll-to="PROC-002"><i class="fas fa-star policy-type-icon"></i><span>PROC-002: سياسة تأهيل وتقييم الموردين</span></li>
-                                        <li class="policy-subitem" data-scroll-to="PROC-003"><i class="fas fa-users-cog policy-type-icon"></i><span>PROC-003: سياسة إدارة مقاولي الباطن</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="CC-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-calculator policy-type-icon"></i>
-                                        <span>11. دليل ضبط ومراقبة التكاليف</span> 
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="CC-001">
-                                            <i class="fas fa-calculator policy-type-icon"></i>
-                                            <span>CC-001: سياسة ضبط ومراقبة التكاليف</span>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="policy-item">
-                            <div class="policy-header">
-                                <i class="fas fa-angle-left policy-icon"></i>
-                                <i class="fas fa-gears policy-type-icon"></i>
-                                <span>وثائق عمليات المشاريع (PMs / HSE / QAQC / STO)</span>
-                            </div>
-                            <ul class="policy-children hidden">
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="HSE-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-helmet-safety policy-type-icon"></i>
-                                        <span>12. دليل الصحة والسلامة والبيئة (HSE)</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="HSE-001"><i class="fas fa-hard-hat policy-type-icon"></i><span>HSE-001: إجراءات السلامة العامة بالموقع</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HSE-002"><i class="fas fa-fire-extinguisher policy-type-icon"></i><span>HSE-002: خطط الاستجابة للطوارئ والإخلاء</span></li>
-                                        <li class="policy-subitem" data-scroll-to="HSE-003"><i class="fas fa-recycle policy-type-icon"></i><span>HSE-003: سياسة حماية البيئة وإدارة المخلفات</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="QAQC-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-check-double policy-type-icon"></i>
-                                        <span>13. دليل إدارة الجودة (QA/QC)</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="QAQC-001"><i class="fas fa-clipboard-check policy-type-icon"></i><span>QAQC-001: معايير الجودة وخطة الجودة للمشروع</span></li>
-                                        <li class="policy-subitem" data-scroll-to="QAQC-002"><i class="fas fa-search policy-type-icon"></i><span>QAQC-002: إجراءات الفحص والاستلام (Inspections)</span></li>
-                                        <li class="policy-subitem" data-scroll-to="QAQC-003"><i class="fas fa-times-circle policy-type-icon"></i><span>QAQC-003: سياسة إدارة حالات عدم المطابقة (NCRs)</span></li>
-                                    </ul>
-                                </li>
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="PMs-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-tasks policy-type-icon"></i>
-                                        <span>14. دليل إدارة المشاريع (PMs)</span> </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="PMs-001"><i class="fas fa-play-circle policy-type-icon"></i><span>PMs-001: سياسة بدء وتخطيط المشروع</span></li>
-                                        <li class="policy-subitem" data-scroll-to="PMs-002"><i class="fas fa-pencil-ruler policy-type-icon"></i><span>PMs-002: سياسة إدارة أوامر التغيير (Change Orders)</span></li>
-                                        <li class="policy-subitem" data-scroll-to="PMs-003"><i class="fas fa-flag-checkered policy-type-icon"></i><span>PMs-003: سياسة تسليم المشاريع (الابتدائي والنهائي)</span></li>
-                                    </ul>
-                                </li>
-                                
-                                <li class="policy-item">
-                                    <div class="policy-header" data-file="STO-Manual">
-                                        <i class="fas fa-angle-left policy-icon"></i>
-                                        <i class="fas fa-warehouse policy-type-icon"></i>
-                                        <span>15. دليل إدارة المخازن والمواد</span> 
-                                    </div>
-                                    <ul class="policy-children hidden">
-                                        <li class="policy-subitem" data-scroll-to="STO-001"><i class="fas fa-pallet policy-type-icon"></i><span>STO-001: سياسة استلام وتخزين المواد</span></li>
-                                        <li class="policy-subitem" data-scroll-to="STO-002"><i class="fas fa-dolly-flatbed policy-type-icon"></i><span>STO-002: سياسة صرف المواد للمشاريع</span></li>
-                                        <li class="policy-subitem" data-scroll-to="STO-003"><i class="fas fa-clipboard-check policy-type-icon"></i><span>STO-003: سياسة الجرد ومراقبة المخزون</span></li>
-                                        <li class="policy-subitem" data-scroll-to="STO-004"><i class="fas fa-recycle policy-type-icon"></i><span>STO-004: سياسة إدارة المواد الراكدة والتخريد</span></li>
-                                    </ul>
-                                </li>
-                                </ul>
-                        </li>
-                    </ul>
+                    <div class="tree-container" id="tree-root">
+        
+                    </div>
                 </nav>
-                </aside>
+            </aside>
 
             <main id="content" class="flex-1 p-6 overflow-y-auto bg-gray-50">
                 <div id="content-container" class="bg-white rounded-lg shadow-md p-6 max-w-5xl mx-auto">
@@ -283,13 +92,29 @@
                                    spellcheck="false">
                         </div>
 
+                        <div class="max-w-4xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+                            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg flex items-center">
+                                <i class="fas fa-book-open text-4xl text-blue-600 ml-4"></i>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-blue-800">21</h3>
+                                    <p class="text-lg text-gray-700">دليل إجرائي موحد</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 p-6 rounded-lg flex items-center">
+                                <i class="fas fa-file-alt text-4xl text-green-600 ml-4"></i>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-green-800">82</h3>
+                                    <p class="text-lg text-gray-700">سياسة وإجراء تفصيلي</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="flex justify-center">
                             <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 text-right max-w-4xl">
                                 <h3 class="text-2xl font-bold text-blue-800 mb-4">مقدمة عامة</h3>
                                 <div class="text-gray-700 space-y-4 leading-relaxed">
                                     <p>
                                         يهدف هذا الدليل إلى توحيد السياسات والإجراءات الداخلية لكافة أقسام شركة مقاولات عامة متوسطة الحجم في المملكة العربية السعودية، بما يضمن المهنية والوضوح والتكامل.
-                                    </D>
+                                    </p>
                                     <p>
                                         تمت صياغة هذه السياسات وفق أفضل ممارسات قطاع المقاولات في المملكة وبما يتوافق مع أنظمة ولوائح المملكة (مثل نظام العمل السعودي ولوائح وزارة الموارد البشرية واللوائح التنفيذية للسلامة والصحة المهنية والمعايير الدولية للجودة كمعيار ISO 9001).
                                     </p>
@@ -324,11 +149,14 @@
             </main>
         </div>
     </div>
-    <script src="js/main.js"></script>
-    <script defer src="/assets/awtad-ai-widget.min.js" 
-      data-endpoint="https://api.kholaidy.com/api/policies-ai" 
-      data-title="مساعد السياسات الذكي" 
-      data-welcome="ألصق نص السياسة هنا… أو اتركني أقرأ الصفحة." 
-      data-lang="ar"></script>
+<script src="js/data.js"></script>
+<script src="js/tree-builder.js"></script>
+<script src="js/content-loader.js"></script>
+<script src="js/main.js"></script>
+<script src="js/print-all.js"></script>
+<script src="js/edit-mode.js"></script>
+
+
+
 </body>
 </html>

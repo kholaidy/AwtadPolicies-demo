@@ -9,13 +9,13 @@ $ErrorActionPreference = 'Stop'
 
 $prefixMap = @{
   'gov'='GOV'; 'lgl'='LGL'; 'hr'='HR'; 'fin'='FIN'; 'acc'='ACC'; 'it'='IT';
-  'PMs'='PMs'; 'proc'='PROC'; 'qaqc'='QAQC'; 'ten'='TEN'; 'am'='AM'; 'cc'='CC'; 'hse'='HSE'
+  'PMO'='PMO'; 'proc'='PROC'; 'qaqc'='QAQC'; 'ten'='TEN'; 'am'='AM'; 'cc'='CC'; 'hse'='HSE'
 }
 
 function Get-CodeFromId([string]$id) {
   if (-not $id) { return $null }
   $lower = $id.ToLower()
-  $m = [regex]::Match($lower, '\b(gov|lgl|hr|fin|acc|it|PMs|proc|qaqc|ten|am|cc|hse)[-_]?(\d{3,})\b')
+  $m = [regex]::Match($lower, '\b(gov|lgl|hr|fin|acc|it|PMO|proc|qaqc|ten|am|cc|hse)[-_]?(\d{3,})\b')
   if ($m.Success) {
     $prefix = $m.Groups[1].Value.ToUpper()
     $num = [int]$m.Groups[2].Value
