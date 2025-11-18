@@ -4,7 +4,7 @@ const classificationData = {
     "الحوكمة والامتثال": {
         nameEn: "Governance & Compliance",
         manuals: {
-            "GOV - دليل الحوكمة وأخلاقيات العمل ✓✓": {
+            "GOV - دليل الحوكمة وأخلاقيات العمل ": {
                 code: "GOV-Manual-1",
                 policies: [
                     { code: "GOV-001", name: "مدونة السلوك وأخلاقيات المهنة" },
@@ -13,14 +13,14 @@ const classificationData = {
                     { code: "GOV-004", name: "سياسة تعارض المصالح" }
                 ]
             },
-            "GOV - دليل التنظيم والصلاحيات ✓✓": {
+            "GOV - دليل التنظيم والصلاحيات ": {
                 code: "GOV-Manual-2",
                 policies: [
                     { code: "GOV-005", name: "الهيكل التنظيمي المعتمد" },
                     { code: "GOV-006", name: "جدول الصلاحيات (DoA)" }
                 ]
             },
-            "LGL - دليل الشؤون القانونية ✓✓": {
+            "LGL - دليل الشؤون القانونية ": {
                 code: "LGL-Manual",
                 policies: [
                     { code: "LGL-001", name: "سياسة مراجعة وإدارة العقود" },
@@ -28,7 +28,7 @@ const classificationData = {
                     { code: "LGL-003", name: "سياسة المساهمة في اعداد نماذج العقود" }
                 ]
             },
-            "PRM - دليل إدارة الأداء ✓✓": {
+            "PRM - دليل إدارة الأداء ": {
                 code: "PRM-Manual",
                 policies: [
                     { code: "PRM-001", name: "سياسة الاجتماع الدوري للإدارة" },
@@ -155,7 +155,7 @@ const classificationData = {
                     { code: "BDM-004", name: "سياسة مراقبة السمعة الرقمية" }
                 ]
             },
-            "TEN - دليل العطاءات والتسعير ✓✓": {
+            "TEN - دليل العطاءات والتسعير ": {
                 code: "TEN-Manual",
                 policies: [
                     { code: "TEN-001", name: "سياسة دراسة العطاءات والتسعير" },
@@ -167,7 +167,7 @@ const classificationData = {
     "إدارة المشاريع والعمليات": {
         nameEn: "Project Management & Operations",
         manuals: {
-            "PMO - دليل مكتب إدارة المشاريع ✓✓": {
+            "PMO - دليل مكتب إدارة المشاريع ": {
                 code: "PMO-Manual",
                 policies: [
                     { code: "PMO-001", name: "سياسة بدء وتخطيط المشروع" },
