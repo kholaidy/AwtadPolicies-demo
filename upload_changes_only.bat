@@ -1,7 +1,7 @@
 @echo off
 
 echo.
-echo === رفع التعديلات الجديدة فقط إلى GitHub ===
+echo === Upload New Changes Only to GitHub ===
 echo.
 
 cd /d "H:\My Drive\kholaidy.com\sites\AwtadPolicies.kholaidy.com"
@@ -15,13 +15,13 @@ IF NOT EXIST ".git" (
 git add .
 git diff --cached --quiet
 IF ERRORLEVEL 1 (
-    git commit -m "رفع تعديلات جديدة فقط"
+    git commit -m "Upload new changes only"
     git push origin main
     echo.
-    echo ✅ تم رفع الملفات التي تم تعديلها فقط.
+    echo Successfully uploaded modified files only.
 ) ELSE (
     echo.
-    echo ⚠️ لا يوجد أي تعديل جديد لرفعه.
+    echo Warning: No new changes to upload.
 )
 
 pause
