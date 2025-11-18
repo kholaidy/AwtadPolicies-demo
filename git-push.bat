@@ -4,7 +4,7 @@ echo.
 echo === Upload New Changes Only to GitHub ===
 echo.
 
-cd /d "H:\My Drive\kholaidy.com\sites\AwtadPolicies.kholaidy.com"
+cd /d "H:\My Drive\sites\AwtadPolicies.kholaidy.com\client"
 
 IF NOT EXIST ".git" (
     git init
