@@ -20,12 +20,36 @@
                     </a>
                 </div>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 relative">
                     
-                    <div id="user-badge" class="hidden md:hidden lg:flex items-center gap-2 bg-blue-800 bg-opacity-50 px-3 py-1.5 rounded-full border border-blue-700 mx-2 transition-all">
-                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span id="user-email-display" class="text-xs font-medium text-blue-100 tracking-wide">جاري التحقق...</span>
+                    <div id="user-badge-desktop" class="hidden md:flex items-center gap-3 bg-blue-800 bg-opacity-40 px-4 py-1.5 rounded-full border border-blue-700 mx-2 transition-all hover:bg-opacity-60">
+                        <div class="flex items-center gap-2 border-l border-blue-600 pl-3 ml-1">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.5)]"></div>
+                            <span id="desktop-email" class="text-xs font-medium text-blue-100 tracking-wide font-mono">جاري التحقق...</span>
+                        </div>
+                        <a href="/cdn-cgi/access/logout" class="text-red-300 hover:text-red-100 hover:bg-red-500 hover:bg-opacity-20 p-1 rounded-full transition-colors" title="تسجيل الخروج">
+                            <i class="fas fa-sign-out-alt text-sm"></i>
+                        </a>
                     </div>
+
+                    <div class="md:hidden relative" id="mobile-user-wrapper" style="display: none;">
+                        <button id="mobile-user-btn" class="header-btn-icon bg-blue-800 hover:bg-blue-700 border border-blue-600" title="حسابي">
+                            <i class="fas fa-user text-blue-100"></i>
+                        </button>
+                        
+                        <div id="mobile-user-dropdown" class="hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
+                            <div class="p-3 border-b border-gray-100 bg-gray-50">
+                                <p class="text-xs text-gray-500 mb-1">مسجل الدخول باسم:</p>
+                                <p id="mobile-email" class="text-xs font-bold text-gray-800 truncate font-mono">...</p>
+                            </div>
+                            <a href="/cdn-cgi/access/logout" class="flex items-center gap-2 w-full p-3 text-right text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>تسجيل الخروج</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="h-6 w-px bg-blue-700 mx-1 hidden md:block"></div>
 
                     <button id="print-btn-desktop" class="hidden lg:flex header-btn">
                         <i class="fas fa-print"></i>
@@ -44,7 +68,7 @@
                     </button>
 
                     <div class="md:hidden relative">
-                        <button id="dropdown-menu-btn" class="header-btn-icon" title="القائمة">
+                        <button id="dropdown-menu-btn" class="header-btn-icon" title="أدوات">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
                         <div id="header-dropdown" class="dropdown-menu hidden">
@@ -59,7 +83,7 @@
                         </div>
                     </div>
 
-                    <button id="mobile-menu-btn" class="md:hidden header-btn-icon" title="القائمة الجانبية">
+                    <button id="mobile-menu-btn" class="md:hidden header-btn-icon mr-1" title="القائمة الجانبية">
                         <i class="fas fa-bars"></i>
                     </button>
 

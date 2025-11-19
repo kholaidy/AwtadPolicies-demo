@@ -1,43 +1,83 @@
 // js/auth.js
-// ملف مخصص لإدارة هوية المستخدم عبر Cloudflare Access
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchUserIdentity();
+    setupMobileUserMenu();
 });
 
 async function fetchUserIdentity() {
-    const emailDisplay = document.getElementById('user-email-display');
-    const userBadge = document.getElementById('user-badge');
-
-    // إذا لم يكن العنصر موجوداً في الصفحة، لا تفعل شيئاً
-    if (!emailDisplay) return;
+    // العناصر في الواجهة
+    const desktopBadge = document.getElementById('user-badge-desktop');
+    const desktopEmail = document.getElementById('desktop-email');
+    
+    const mobileWrapper = document.getElementById('mobile-user-wrapper');
+    const mobileEmail = document.getElementById('mobile-email');
 
     try {
-        // هذا الرابط توفره Cloudflare تلقائياً لأي موقع محمي بـ Zero Trust
         const response = await fetch('/cdn-cgi/access/get-identity');
         
         if (response.ok) {
             const data = await response.json();
             if (data.email) {
-                emailDisplay.textContent = data.email;
-                // إظهار الشارة فقط عند نجاح الجلب
-                if (userBadge) {
-                    userBadge.classList.remove('hidden'); 
-                    userBadge.classList.add('flex'); // لضمان التنسيق
-                    userBadge.title = "تم تسجيل الدخول بأمان عبر Cloudflare Zero Trust";
-                }
+                // 1. حفظ الإيميل عالمياً للمساعد الذكي
+                window.currentUserEmail = data.email; 
+
+                // 2. تحديث واجهة سطح المكتب/التابلت
+                if (desktopEmail) desktopEmail.textContent = data.email;
+                if (desktopBadge) desktopBadge.classList.remove('hidden'); // تأكد من ظهورها في md/lg
+                
+                // 3. تحديث واجهة الموبايل
+                if (mobileEmail) mobileEmail.textContent = data.email;
+                if (mobileWrapper) mobileWrapper.style.display = 'block'; // إظهار أيقونة المستخدم
+
             } else {
-                emailDisplay.textContent = "زائر";
+                handleGuest();
             }
         } else {
-            // في حالة العمل محلياً (Localhost) أو فشل الاتصال
-            console.log("Running locally or not authenticated via Cloudflare Access");
-            // يمكنك إخفاء الشارة أو إظهار نص بديل
-            // if (userBadge) userBadge.classList.add('hidden');
-             emailDisplay.textContent = "Local / Dev"; 
+            console.log("Running locally or not authenticated");
+            handleLocalDev();
         }
     } catch (error) {
-        console.warn('Could not fetch user identity:', error);
-        emailDisplay.textContent = "غير متصل";
+        console.warn('Auth check failed:', error);
+        handleLocalDev(); // نعتبره وضع مطور في حالة الخطأ
     }
+}
+
+// وظائف مساعدة للعرض
+function handleGuest() {
+    const els = [document.getElementById('desktop-email'), document.getElementById('mobile-email')];
+    els.forEach(el => { if(el) el.textContent = "زائر"; });
+    window.currentUserEmail = "Visitor";
+}
+
+function handleLocalDev() {
+    const els = [document.getElementById('desktop-email'), document.getElementById('mobile-email')];
+    els.forEach(el => { if(el) el.textContent = "Dev / Local"; });
+    window.currentUserEmail = "Local-Dev";
+    
+    // في الوضع المحلي، نظهر العناصر للتجربة
+    const desktopBadge = document.getElementById('user-badge-desktop');
+    const mobileWrapper = document.getElementById('mobile-user-wrapper');
+    if (desktopBadge) desktopBadge.classList.remove('hidden');
+    if (mobileWrapper) mobileWrapper.style.display = 'block';
+}
+
+// إدارة قائمة المستخدم في الموبايل
+function setupMobileUserMenu() {
+    const btn = document.getElementById('mobile-user-btn');
+    const menu = document.getElementById('mobile-user-dropdown');
+
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+    });
+
+    // إغلاق القائمة عند النقر خارجها
+    document.addEventListener('click', (e) => {
+        if (!menu.classList.contains('hidden') && !menu.contains(e.target) && e.target !== btn) {
+            menu.classList.add('hidden');
+        }
+    });
 }
