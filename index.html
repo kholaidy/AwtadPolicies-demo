@@ -10,61 +10,69 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="flex flex-col h-screen">
-<header class="bg-blue-900 text-white shadow-lg">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div class="flex items-center">
-<a href="index.html" class="flex items-center">
-            <img src="img/logo_nobg.png" alt="شعار شركة أوتاد الفهد" class="h-12 ml-3">
-            <h1 class="text-xl md:text-2xl font-bold">بوابة السياسات والإجراءات التشغيلية</h1>
-        </a>
-        </div>
+        <header class="bg-blue-900 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="img/logo_nobg.png" alt="شعار شركة أوتاد الفهد" class="h-12 ml-3">
+                        <h1 class="text-xl md:text-2xl font-bold">بوابة السياسات والإجراءات التشغيلية</h1>
+                    </a>
+                </div>
 
-        <div class="flex items-center gap-2">
-            <button id="print-btn-desktop" class="hidden lg:flex header-btn">
-                <i class="fas fa-print"></i>
-                <span>طباعة</span>
-            </button>
-            <button id="print-all-btn-desktop" class="hidden lg:flex header-btn">
-                <i class="fas fa-copy"></i>
-                <span>طباعة الكل</span>
-            </button>
+                <div class="flex items-center gap-2">
+                    
+                    <div id="user-badge" class="hidden md:hidden lg:flex items-center gap-2 bg-blue-800 bg-opacity-50 px-3 py-1.5 rounded-full border border-blue-700 mx-2 transition-all">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span id="user-email-display" class="text-xs font-medium text-blue-100 tracking-wide">جاري التحقق...</span>
+                    </div>
 
-            <button id="print-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة">
-                <i class="fas fa-print"></i>
-            </button>
-            <button id="print-all-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة الكل">
-                <i class="fas fa-copy"></i>
-            </button>
-            <div class="md:hidden relative">
-                <button id="dropdown-menu-btn" class="header-btn-icon" title="القائمة">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div id="header-dropdown" class="dropdown-menu hidden">
-                    <button id="print-btn-mobile" class="dropdown-item">
+                    <button id="print-btn-desktop" class="hidden lg:flex header-btn">
                         <i class="fas fa-print"></i>
                         <span>طباعة</span>
                     </button>
-                    <button id="print-all-btn-mobile" class="dropdown-item">
+                    <button id="print-all-btn-desktop" class="hidden lg:flex header-btn">
                         <i class="fas fa-copy"></i>
                         <span>طباعة الكل</span>
                     </button>
+
+                    <button id="print-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة">
+                        <i class="fas fa-print"></i>
+                    </button>
+                    <button id="print-all-btn-medium" class="hidden md:flex lg:hidden header-btn-icon" title="طباعة الكل">
+                        <i class="fas fa-copy"></i>
+                    </button>
+
+                    <div class="md:hidden relative">
+                        <button id="dropdown-menu-btn" class="header-btn-icon" title="القائمة">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div id="header-dropdown" class="dropdown-menu hidden">
+                            <button id="print-btn-mobile" class="dropdown-item">
+                                <i class="fas fa-print"></i>
+                                <span>طباعة</span>
+                            </button>
+                            <button id="print-all-btn-mobile" class="dropdown-item">
+                                <i class="fas fa-copy"></i>
+                                <span>طباعة الكل</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="md:hidden header-btn-icon" title="القائمة الجانبية">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <button id="print-btn" class="hidden"></button>
+                    <button id="print-all-btn" class="hidden"></button>
+                    <button id="edit-toggle-btn" class="hidden"></button>
                 </div>
             </div>
-
-            <button id="mobile-menu-btn" class="md:hidden header-btn-icon" title="القائمة الجانبية">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <button id="print-btn" class="hidden"></button>
-            <button id="print-all-btn" class="hidden"></button>
-            <button id="edit-toggle-btn" class="hidden"></button>
-        </div>
-    </div>
-</header>
+        </header>
 
         <div class="flex flex-1 overflow-hidden">
-<aside id="sidebar" class="bg-white w-64 shadow-md overflow-y-auto transition-all duration-300 transform">
-                    <div class="p-4">
+            <aside id="sidebar" class="bg-white w-64 shadow-md overflow-y-auto transition-all duration-300 transform">
+                <div class="p-4">
                     <div class="relative">
                         <input type="text" id="sidebar-search" placeholder="بحث في الأقسام..." 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md text-right pr-8">
@@ -74,13 +82,13 @@
     
                 <nav id="policy-tree" class="mt-4">
                     <div class="tree-container" id="tree-root">
-        
-                    </div>
+                        </div>
                 </nav>
             </aside>
 
             <main id="content" class="flex-1 p-6 overflow-y-auto bg-gray-50">
                 <div id="content-container" class="bg-white rounded-lg shadow-md p-6 max-w-5xl mx-auto">
+                    
                     <div class="text-center py-12">
                         <img src="img/logo-large.png" alt="شعار شركة أوتاد الفهد" class="h-32 mx-auto mb-6">
                         <h2 class="text-3xl font-bold text-blue-900 mb-4">دليل السياسات والإجراءات الداخلية الموحدة</h2>
@@ -89,11 +97,27 @@
 
                         <div class="ai-search-wrapper max-w-2xl mx-auto mb-8">
                             <input type="text"
-                                   placeholder="اسأل هنا مباشرة (مثال: ما هي سياسة الإجازات؟)"
+                                   placeholder="اسأل المساعد الذكي مباشرة (مثال: ما هي سياسة الإجازات؟)"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-md text-right text-base ai-search-input"
                                    spellcheck="false">
                         </div>
 
+                        <div class="max-w-4xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+                            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg flex items-center">
+                                <i class="fas fa-book-open text-4xl text-blue-600 ml-4"></i>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-blue-800">21</h3>
+                                    <p class="text-lg text-gray-700">دليل إجرائي موحد</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 p-6 rounded-lg flex items-center">
+                                <i class="fas fa-file-alt text-4xl text-green-600 ml-4"></i>
+                                <div>
+                                    <h3 class="text-3xl font-bold text-green-800">82</h3>
+                                    <p class="text-lg text-gray-700">سياسة وإجراء تفصيلي</p>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="flex justify-center">
                             <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 text-right max-w-4xl">
@@ -105,6 +129,7 @@
                                     <p>
                                         تمت صياغة هذه السياسات وفق أفضل ممارسات قطاع المقاولات في المملكة وبما يتوافق مع أنظمة ولوائح المملكة (مثل نظام العمل السعودي ولوائح وزارة الموارد البشرية واللوائح التنفيذية للسلامة والصحة المهنية والمعايير الدولية للجودة كمعيار ISO 9001).
                                     </p>
+                                    
                                     <div class="bg-white p-4 rounded-lg border border-blue-100 mt-4">
                                         <h4 class="text-lg font-bold text-blue-800 mb-3">عناصر كل سياسة:</h4>
                                         <ul class="list-disc list-inside text-gray-700 space-y-2 mr-4">
@@ -118,6 +143,7 @@
                                             <li>تاريخ الاعتماد والتحديث</li>
                                         </ul>
                                     </div>
+
                                     <div class="bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
                                         <h4 class="text-lg font-bold text-green-800 mb-3">أهداف البوابة:</h4>
                                         <ul class="list-disc list-inside text-gray-700 space-y-2 mr-4">
@@ -125,36 +151,27 @@
                                             <li>تسهيل الوصول إلى المعلومات والإجراءات لجميع الموظفين</li>
                                             <li>تحسين كفاءة العمليات وتقليل الأخطاء</li>
                                             <li>دعم عمليات التدريب والتأهيل للموظفين الجدد</li>
-                                            <li>ضمان الامثال للأنظمة واللوائح المحلية والدولية</li>
+                                            <li>ضمان الامتثال للأنظمة واللوائح المحلية والدولية</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="max-w-4xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
-                            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg flex items-center">
-                                <i class="fas fa-book-open text-4xl text-blue-600 ml-4"></i>
-                                <div>
-                                    <h3 class="text-3xl font-bold text-blue-800">21</h3>
-                                    <p class="text-lg text-gray-700">دليل إجرائي موحد</p>
-                                </div>
-                            </div>
- 
-                        </div>
+
                     </div>
                 </div>
             </main>
         </div>
     </div>
-<script src="js/data.js"></script>
-<script src="js/tree-builder.js"></script>
-<script src="js/content-loader.js"></script>
-<script src="js/main.js"></script>
-<script src="js/print-all.js"></script>
-<script src="js/edit-mode.js"></script>
-<script src="js/awtad-ai-widget.min.js"></script>
 
-
+    <script src="js/data.js"></script>
+    <script src="js/tree-builder.js"></script>
+    <script src="js/content-loader.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/print-all.js"></script>
+    <script src="js/edit-mode.js"></script>
+    
+    <script src="js/auth.js"></script>
 
     <script defer src="js/awtad-ai-widget.min.js"
       data-endpoint="https://api.kholaidy.com/api/policies-ai"
