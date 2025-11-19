@@ -36,6 +36,10 @@ function buildTree(treeRoot, classificationData) {
             const manualHeader = document.createElement('div');
             manualHeader.className = 'manual-header';
             manualHeader.dataset.manualCode = manualData.code;
+            
+            // [تعديل]: إضافة data-file ليعمل المساعد الذكي بشكل صحيح
+            manualHeader.setAttribute('data-file', manualData.code);
+
             manualHeader.innerHTML = `
                 <div class="manual-title">
                     <span class="icon">◀</span>
@@ -81,19 +85,16 @@ function buildTree(treeRoot, classificationData) {
                         scrollToSection(this.dataset.policyCode);
                     }
 
-                    // --- START: الكود المضاف لإغلاق القائمة الجانبية ---
-                    // البحث عن القائمة الجانبية والغطاء (Overlay)
+                    // --- إغلاق القائمة الجانبية في الموبايل عند اختيار سياسة ---
                     const sidebar = document.getElementById('sidebar');
                     const overlay = document.querySelector('.overlay');
                     
-                    // التحقق إذا كانت القائمة مفتوحة (للتأكد أننا في وضع الموبايل)
                     if (sidebar && sidebar.classList.contains('open')) {
                         sidebar.classList.remove('open');
                         if (overlay) {
                             overlay.remove();
                         }
                     }
-                    // --- END: الكود المضاف ---
                 });
 
                 policiesContainer.appendChild(policyItem);
@@ -116,7 +117,7 @@ function buildTree(treeRoot, classificationData) {
                     loadPolicyContent(manualData.code, contentContainer);
                 }
 
-                // --- START: الكود المضاف لإغلاق القائمة الجانبية (عند النقر على الدليل) ---
+                // --- إغلاق القائمة الجانبية في الموبايل عند اختيار الدليل ---
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.querySelector('.overlay');
                 
@@ -126,7 +127,6 @@ function buildTree(treeRoot, classificationData) {
                         overlay.remove();
                     }
                 }
-                // --- END: الكود المضاف ---
             });
         });
 
